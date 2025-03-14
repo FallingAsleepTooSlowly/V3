@@ -1,0 +1,8 @@
+{
+    "files": [],
+    // 指明要引用的工程。每个引用的path属性都可以指向到包含 tsconfig.json 文件的目录，或者直接指向到配置文件本身
+    "references": [
+        { "path": "./tsconfig.app.json" },
+        { "path": "./tsconfig.node.json" }
+    ]
+}
