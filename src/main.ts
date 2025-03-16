@@ -9,7 +9,7 @@ import 'virtual:svg-icons-register'
 // createApp 接收根组件
 const app = createApp(App)
 
-// 全局注册组件
+// 不使用插件时普通的全局注册组件方式
 // app.component('svgIcon', svgIcon)
 
 // mount 将根组件将根组件渲染在接收的容器参数里
