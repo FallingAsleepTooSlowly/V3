@@ -1,6 +1,25 @@
 // 路由配置
 import routes from './routes';
 import { createRouter, createWebHashHistory } from 'vue-router';
+/*
+    nprogress 是前端轻量级 web 进度条插件，一般搭配路由守卫使用
+    安装：npm install nprogress
+    使用：
+        开启进度条：NProgress.start()
+        关闭进度条：NProgress.done()
+        设置进度条的百分比，其中 n 是 0 ~ 1 之间的数字：NProgress.set(n)
+    配置：
+        NProgress.configure({
+            // 进度条开始时的百分比（默认0.08）
+            minimum: 0.08,
+            // 是否显示右上角螺旋加载提示
+            showSpinner: true,
+            // 设置父容器（默认body）
+            parent: '#box'
+        })
+*/
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
  
 // 创建路由配置
 export const router = createRouter({
@@ -19,11 +38,14 @@ export const router = createRouter({
 });
 
 // 全局前置守卫
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+    if (to.meta.title) NProgress.start()
     next();
 });
  
 // 全局后置守卫
-router.afterEach((to, from) => { });
+router.afterEach((to, from) => { 
+    NProgress.done()
+});
 
 export default router;
