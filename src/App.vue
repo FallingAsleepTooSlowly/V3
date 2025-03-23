@@ -1,13 +1,5 @@
-<script setup lang="ts">
-    import HelloWorld from './components/HelloWorld.vue'
-
-    // element-plus 默认是英文，需要加上 ElConfigProvider 去设置成中文
-    // import zhCn from 'element-plus/lib/locale/lang/zh-cn'
-    // const locale = zhCn
-</script>
-
 <template>
-    <div>
+    <!-- <div>
         <a href="https://vite.dev" target="_blank">
             <img src="/vite.svg" class="logo" alt="Vite logo" />
         </a>
@@ -15,8 +7,16 @@
             <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
         </a>
     </div>
-    <HelloWorld msg="Vite + Vue" />
+    <HelloWorld msg="Vite + Vue" /> -->
 </template>
+
+<script setup lang="ts">
+    // import HelloWorld from './components/HelloWorld.vue'
+
+    // element-plus 默认是英文，需要加上 ElConfigProvider 去设置成中文
+    // import zhCn from 'element-plus/lib/locale/lang/zh-cn'
+    // const locale = zhCn
+</script>
 
 <style scoped>
 .logo {

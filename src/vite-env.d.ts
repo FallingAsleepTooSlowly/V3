@@ -8,3 +8,4 @@ declare module '*.vue'
 
 // 以下同理
 declare module 'nprogress'
+declare module 'js-cookie'

@@ -1,6 +1,7 @@
 // 路由配置
 import routes from './routes';
 import { createRouter, createWebHashHistory } from 'vue-router';
+import { Session } from '@/utils/storage'
 /*
     nprogress 是前端轻量级 web 进度条插件，一般搭配路由守卫使用
     安装：npm install nprogress
@@ -39,8 +40,24 @@ export const router = createRouter({
 
 // 全局前置守卫
 router.beforeEach(async (to, from, next) => {
+    NProgress.configure({ showSpinner: false })
     if (to.meta.title) NProgress.start()
-    next();
+    const token = Session.get('token')
+    if (to.path === '/login' && !token) {
+        next()
+		NProgress.done()
+    } else {
+        if (!token) {
+			next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
+			Session.clear();
+			NProgress.done();
+		} else if (token && to.path === '/login') {
+			next('/home');
+			NProgress.done();
+        } else {
+            next()
+        }
+    }
 });
  
 // 全局后置守卫
