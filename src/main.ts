@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
-import './style.css'
 import App from './App.vue'
 import router from '@/router'
 import pinia from '@/stores/index';
 import 'virtual:svg-icons-register'
+import '@/theme/index.scss'
 
 // import svgIcon from '@/components/svgIcon/index.vue'    // svg组件
 
