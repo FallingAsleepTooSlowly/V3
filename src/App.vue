@@ -8,6 +8,10 @@
         </a>
     </div>
     <HelloWorld msg="Vite + Vue" /> -->
+
+    <!-- <el-config-provider :locale="zhCn"> -->
+        <router-view></router-view>
+    <!-- </el-config-provider> -->
 </template>
 
 <script setup lang="ts">
