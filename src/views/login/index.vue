@@ -2,13 +2,17 @@
     <div class="login flex-center">
         <div class="login-box flex-column">
             <div class="login-top flex-center">欢迎</div>
-            <div class="login-main flex-row-center flex-1">
-                <el-tabs v-model="activeName" @tab-click="handleClick">
-                    <el-tab-pane label="User" name="first">User</el-tab-pane>
-                    <el-tab-pane label="Config" name="second">Config</el-tab-pane>
-                    <el-tab-pane label="Role" name="third">Role</el-tab-pane>
-                    <el-tab-pane label="Task" name="fourth">Task</el-tab-pane>
-                </el-tabs>
+            <div class="flex-row-center flex-1">
+                <div class="login-main">
+                    <el-tabs v-model="activeName" @tab-click="handleClick">
+                        <el-tab-pane label="用户名登陆" name="nameLogin">
+
+                        </el-tab-pane>
+                        <el-tab-pane label="手机号登陆" name="second">
+                            暂未开放此功能
+                        </el-tab-pane>
+                    </el-tabs>
+                </div>
             </div>
         </div>
     </div>
@@ -18,7 +22,7 @@
     // import { ref } from 'vue';
     import type { TabsPaneContext } from 'element-plus'
 
-    const activeName = ref("third")
+    const activeName = ref("nameLogin")
     const handleClick = (tab: TabsPaneContext, event: Event) => {
         console.log("tab===>", JSON.parse(JSON.stringify(tab)))
         console.log("event====>", event)
@@ -37,11 +41,13 @@
         .login-top {
             height: 130px;
             border: 1px solid red;
+            box-sizing: border-box;
         }
 
         .login-main {
             width: 80%;
-            margin: 0 auto;
+            height: 88%;
+            border: 1px solid purple;
         }
     }
 }

@@ -1,0 +1,36 @@
+/*
+    规定动画：@keyframes 
+    所有动画属性可以简写在一起：animation: ....;
+    使用 @keyframes 动画的名称：animation-name: loginMain;
+    规定动画完成一个周期所花费的秒或毫秒，默认是 0：animation-duration: 3s;
+    规定动画的速度曲线。默认是 "ease"：animation-timing-function: linear;
+        linear：从头到尾速度相同
+        ease：低速 -> 加快 -> 变慢
+        ease-in：以低速开始
+        ease-out：以低速结束
+        ease-in-out：以低速开始和结束
+        steps(int, start|end)
+        cubic-bezier(n,n,n,n)
+    规定当动画不播放时（当动画完成时，或当动画有一个延迟未开始播放时），要应用到元素的样式：animation-fill-mode: none;
+    规定动画延迟多久开始：animation-delay: 3s;
+    规定动画被播放的次数：animation-iteration-count: 5;
+    规定动画是否在下一周期逆向地播放：animation-direction: normal;
+        normal：正常播放
+        reverse：反向播放
+        alternate：奇数次正向播放，偶数此反向播放
+        alternate-reverse：奇数此反向播放，偶数此正向播放
+        inherit：从父元素继承
+    规定动画是否正在运行或暂停：animation-play-state: paused;
+        paused：暂停动画
+        running：运行动画
+*/
+
+/* 登陆页面 */
+@keyframes loginMain {
+    0% {
+
+    }
+    100% {
+
+    }
+}
