@@ -14,12 +14,16 @@
     </div>
 </template>
 
-<script setup>
-    import { ref } from 'vue';
-    const activeName = ref("first")
-    // const handleClick = (tab: TabsPaneContext, event: Event) => {
-    //     console.log(tab, event)
-    // }
+<script lang="ts" setup>
+    // import { ref } from 'vue';
+    import type { TabsPaneContext } from 'element-plus'
+
+    const activeName = ref("third")
+    const handleClick = (tab: TabsPaneContext, event: Event) => {
+        console.log("tab===>", JSON.parse(JSON.stringify(tab)))
+        console.log("event====>", event)
+        console.log("activeName===>", activeName.value)
+    }
 </script>
 
 <style scoped>
@@ -37,6 +41,7 @@
 
         .login-main {
             width: 80%;
+            margin: 0 auto;
         }
     }
 }

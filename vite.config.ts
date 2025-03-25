@@ -102,7 +102,7 @@ export default defineConfig(() => {
                 // 自动导入 vue3 的 hooks，导入后就不用再 import { ref, computed } from 'vue'
                 imports: ['vue', 'vue-router', 'vue-i18n', '@vueuse/head', '@vueuse/core'],
                 // 可以选择auto-import.d.ts生成的位置，使用ts建议设置为'src/auto-import.d.ts'
-                // dts: 'src/auto-import.d.ts'
+                dts: 'src/auto-import.d.ts'
             }),
             // 自动导入组件的配置
             Components({
