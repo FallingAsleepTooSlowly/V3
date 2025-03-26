@@ -1,2 +1,4 @@
-@import './loading.scss';
-@import './app.scss'
+// sass 1.80 不再支持 @import 需要使用 @use
+@use './loading.scss';
+@use './app.scss';
+@use './transition.scss';
