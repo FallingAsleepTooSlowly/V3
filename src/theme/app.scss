@@ -9,6 +9,10 @@ body,
 	height: 100%;
 }
 
+.root {
+	--theme-color: purple;
+}
+
 .flex { display: flex; }
 // 纵向 flex
 .flex-column { display: flex; flex-direction: column; }
@@ -29,3 +33,4 @@ body,
 
 .bs-border-box { box-sizing: border-box; }
 .fs-12 { font-size: 12px; }
+.height100 { height: 100%; }

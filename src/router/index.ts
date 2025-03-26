@@ -40,14 +40,16 @@ export const router = createRouter({
 
 // 全局前置守卫
 router.beforeEach(async (to, from, next) => {
-    // console.log("to.path=====>", to.path)
+    console.log("to.path=====>", to.path)
     NProgress.configure({ showSpinner: false })
     if (to.meta.title) NProgress.start()
     const token = Session.get('token')
+    Session.clear();
     if (to.path === '/login' && !token) {
         next()
 		NProgress.done()
     } else {
+        console.log("token===>", token)
         if (!token) {
 			next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
 			Session.clear();
