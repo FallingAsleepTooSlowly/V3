@@ -9,9 +9,12 @@ body,
 	height: 100%;
 }
 
-.root {
-	--theme-color: purple;
+html {
+	--theme-color: #409eff;
 }
+
+// :root 优先级比 html 高，但在里面定义变量的话可能因为解析顺序导致变量不生效
+// :root {}
 
 .flex { display: flex; }
 // 纵向 flex
@@ -34,3 +37,4 @@ body,
 .bs-border-box { box-sizing: border-box; }
 .fs-12 { font-size: 12px; }
 .height100 { height: 100%; }
+.border { border: 1px solid var(--theme-color); }

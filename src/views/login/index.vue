@@ -1,7 +1,7 @@
 <template>
 <div class="login flex-center">
-    <div class="login-box flex-column">
-        <div class="login-top flex-center">欢迎</div>
+    <div class="login-box border flex-column">
+        <div class="login-top flex-center"></div>
         <div class="flex-row-center flex-1">
             <div class="login-main-box">
                 <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -27,6 +27,8 @@
 <script lang="ts" setup>
 // import { ref } from 'vue';
 import type { TabsPaneContext } from 'element-plus'
+import { useChangeColor } from '@/utils/theme'
+const { getDarkColor, getLightColor } = useChangeColor()
 
 const activeName = ref("nameLogin")
 const handleClick = (tab: TabsPaneContext, event: Event) => {
@@ -37,7 +39,29 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 
 // 修改主题颜色
 function changeTheme() {
-    document.documentElement.style.setProperty('--el-color-primary', "purple");
+    // 这样使用 getPropertyValue 的话，在 setProperty 之前获取不到值
+    // if (document.documentElement.style.getPropertyValue('--theme-color') === "#409eff") {}
+    if (getComputedStyle(document.documentElement).getPropertyValue('--theme-color') === "#409eff") {
+        // 设置默认主题颜色变量
+        document.documentElement.style.setProperty('--el-color-primary', "#800080");
+        document.documentElement.style.setProperty('--theme-color', "#800080");
+        // 设置深色
+        document.documentElement.style.setProperty('--el-color-primary-dark-2', `${getDarkColor(getComputedStyle(document.documentElement).getPropertyValue('--theme-color'), 0.1)}`);
+        // 设置浅色
+        for (let i = 1; i <= 9; i++) {
+            document.documentElement.style.setProperty(`--el-color-primary-light-${i}`, `${getLightColor(getComputedStyle(document.documentElement).getPropertyValue('--theme-color'), i / 10)}`);
+        }
+    } else {
+        // 设置默认主题颜色变量
+        document.documentElement.style.setProperty('--el-color-primary', "#409eff");
+        document.documentElement.style.setProperty('--theme-color', "#409eff");
+        // 设置深色
+        document.documentElement.style.setProperty('--el-color-primary-dark-2', `${getDarkColor(getComputedStyle(document.documentElement).getPropertyValue('--theme-color'), 0.1)}`);
+        // 设置浅色
+        for (let i = 1; i <= 9; i++) {
+            document.documentElement.style.setProperty(`--el-color-primary-light-${i}`, `${getLightColor(getComputedStyle(document.documentElement).getPropertyValue('--theme-color'), i / 10)}`);
+        }
+    }
 }
     
 </script>
@@ -47,12 +71,10 @@ function changeTheme() {
     .login-box {
         width: 500px;
         height: 500px;
-        border: 1px solid;
         border-radius: 5px;
 
         .login-top {
             height: 130px;
-            border: 1px solid red;
             box-sizing: border-box;
         }
 
@@ -68,6 +90,7 @@ function changeTheme() {
                 height: 100%;
                 display: flex;
                 flex-direction: column;
+                overflow: hidden;
 
                 .input-box {
                     height: 40px;
