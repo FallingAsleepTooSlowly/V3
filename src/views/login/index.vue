@@ -7,11 +7,11 @@
                 <el-tabs v-model="activeName" @tab-click="handleClick">
                     <el-tab-pane class="login-main" label="用户名登陆" name="nameLogin">
                         <!-- <div class="login-main"></div> -->
-                        <el-input class="login-user-name input-box"></el-input>
-                        <el-input class="login-pass-word input-box"></el-input>
-                        <el-input class="login-code input-box"></el-input>
+                        <el-input class="login-user-name input-box up-animation"></el-input>
+                        <el-input class="login-pass-word input-box up-animation"></el-input>
+                        <el-input class="login-code input-box up-animation"></el-input>
                         <div class="login-btn-box">
-                            <el-button type="primary" class="login-confirm" @click="changeTheme"></el-button>
+                            <el-button type="primary" class="login-confirm up-animation" @click="changeTheme"></el-button>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="手机号登陆" name="second">
@@ -39,6 +39,7 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 
 // 修改主题颜色
 function changeTheme() {
+    console.log("env===>", import.meta.env)
     // 这样使用 getPropertyValue 的话，在 setProperty 之前获取不到值
     // if (document.documentElement.style.getPropertyValue('--theme-color') === "#409eff") {}
     if (getComputedStyle(document.documentElement).getPropertyValue('--theme-color') === "#409eff") {
@@ -96,6 +97,16 @@ function changeTheme() {
                     height: 40px;
                     margin-top: 20px;
                 }
+                .up-animation {
+                    animation: loginUp 1s;
+                    animation-fill-mode: backwards;
+                }
+                .login-pass-word {
+                    animation-delay: 50ms;
+                }
+                .login-code {
+                    animation-delay: 100ms;
+                }
                 .login-btn-box {
                     flex: 1;
                     position: relative;
@@ -106,6 +117,7 @@ function changeTheme() {
                         right: 0;
                         bottom: 0;
                         height: 40px;
+                        animation-delay: 150ms;
                     }
                 }
             }

@@ -1,3 +1,5 @@
+/* 主题相关函数 */
+
 import { ElMessage } from 'element-plus';
 
 /**
