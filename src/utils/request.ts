@@ -15,7 +15,7 @@ const axiosInstance: AxiosInstance = axios.create({
     // 自定义请求头
     headers: { 'Content-Type': 'application/json' },
     // 请求超时的毫秒数，如果请求时间超过这个值，则请求会被中断
-    timeout: 50000,
+	timeout: 50000,
     // paramsSerializer 是可选方法，主要用于序列化 params
     // paramsSerializer: {
 	// 	serialize(params) {
@@ -57,7 +57,8 @@ axiosInstance.interceptors.request.use(
 
 // 添加响应拦截器
 axiosInstance.interceptors.response.use(
-    (response) => {
+	(response) => {
+		console.log('response===>', response)
 		// 对响应数据做点什么
 		const res = response.data;
 		if (res.code && res.code !== 0) {
@@ -69,8 +70,10 @@ axiosInstance.interceptors.response.use(
 					.then(() => {})
 					.catch(() => {});
 			}
+			console.log('AAAAAA')
 			return Promise.reject(axiosInstance.interceptors.response);
 		} else {
+			console.log('EEEEEE')
 			return res;
 		}
 	},

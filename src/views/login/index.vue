@@ -11,7 +11,7 @@
                         <el-input class="login-pass-word input-box up-animation"></el-input>
                         <el-input class="login-code input-box up-animation"></el-input>
                         <div class="login-btn-box">
-                            <el-button type="primary" class="login-confirm up-animation" @click="changeTheme">确定</el-button>
+                            <el-button type="primary" class="login-confirm up-animation" @click="userPost">确定</el-button>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="手机号登陆" name="second">
@@ -28,6 +28,8 @@
 // import { ref } from 'vue';
 import type { TabsPaneContext } from 'element-plus'
 import { useChangeColor } from '@/utils/theme'
+import { userPostApi } from '@/api/user'
+
 const { getDarkColor, getLightColor } = useChangeColor()
 
 const activeName = ref("nameLogin")
@@ -35,6 +37,16 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
     console.log("tab===>", JSON.parse(JSON.stringify(tab)))
     console.log("event====>", event)
     console.log("activeName===>", activeName.value)
+}
+
+function userPost() {
+    userPostApi({
+        name: "ganhuan"
+    }).then(res => {
+        console.log('userPost=====>', res)
+    }).catch(e => {
+        console.log('eeeee===>', e)
+    })
 }
 
 // 修改主题颜色
