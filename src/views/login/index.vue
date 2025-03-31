@@ -11,7 +11,7 @@
                         <el-input class="login-pass-word input-box up-animation"></el-input>
                         <el-input class="login-code input-box up-animation"></el-input>
                         <div class="login-btn-box">
-                            <el-button type="primary" class="login-confirm up-animation" @click="changeTheme"></el-button>
+                            <el-button type="primary" class="login-confirm up-animation" @click="changeTheme">确定</el-button>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="手机号登陆" name="second">
@@ -118,6 +118,7 @@ function changeTheme() {
                         bottom: 0;
                         height: 40px;
                         animation-delay: 150ms;
+                        letter-spacing: 6px;
                     }
                 }
             }
