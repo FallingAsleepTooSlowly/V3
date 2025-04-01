@@ -11,7 +11,7 @@
                         <el-input class="login-pass-word input-box up-animation"></el-input>
                         <el-input class="login-code input-box up-animation"></el-input>
                         <div class="login-btn-box">
-                            <el-button type="primary" class="login-confirm up-animation" @click="userPost">确定</el-button>
+                            <el-button type="primary" class="login-confirm up-animation" @click="loginIn">确定</el-button>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="手机号登陆" name="second">
@@ -29,10 +29,15 @@
 import type { TabsPaneContext } from 'element-plus'
 import { useChangeColor } from '@/utils/theme'
 import { userPostApi } from '@/api/user'
+import { useRoute, useRouter } from 'vue-router'
 
+const route = useRoute()
+const router = useRouter()
+// 变更主题的方法
 const { getDarkColor, getLightColor } = useChangeColor()
 
 const activeName = ref("nameLogin")
+
 const handleClick = (tab: TabsPaneContext, event: Event) => {
     console.log("tab===>", JSON.parse(JSON.stringify(tab)))
     console.log("event====>", event)
@@ -47,6 +52,18 @@ function userPost() {
     }).catch(e => {
         console.log('eeeee===>', e)
     })
+}
+
+function loginIn() {
+    console.log('=====>', route.query)
+    console.log('route=====>', route)
+    console.log('router=====>', router)
+    if (route.query?.redirect) {
+        router.push({
+            path: <string>route.query?.redirect,
+            query: Object.keys(<string>route.query?.params).length > 0 ? JSON.parse(<string>route.query?.params) : '',
+        })
+    }
 }
 
 // 修改主题颜色
