@@ -7,7 +7,7 @@ export default [
     {
         // 首页
         path: '/',
-        component: () => import('../views/home/index.vue'),
+        component: () => import('../views/user/index.vue'),
         children: []
     },
     {

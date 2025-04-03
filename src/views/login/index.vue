@@ -30,6 +30,7 @@ import type { TabsPaneContext } from 'element-plus'
 import { useChangeColor } from '@/utils/theme'
 import { userPostApi } from '@/api/user'
 import { useRoute, useRouter } from 'vue-router'
+import { Session } from '@/utils/storage'
 
 const route = useRoute()
 const router = useRouter()
@@ -55,9 +56,8 @@ function userPost() {
 }
 
 function loginIn() {
-    console.log('=====>', route.query)
-    console.log('route=====>', route)
-    console.log('router=====>', router)
+    Session.set('token', Math.random().toString(36).substring(0));
+    console.log('string===>', JSON.parse(<string>route.query?.params))
     if (route.query?.redirect) {
         router.push({
             path: <string>route.query?.redirect,

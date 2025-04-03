@@ -1,0 +1,31 @@
+# 定义项目的编码规范
+
+# 表示是最顶层的配置文件，发现设为true时，才会停止查找.editorconfig文件
+root = true
+
+# 对于所有的文件
+[*]
+charset = utf-8
+# 缩进风格
+indent_style = space
+# 缩进的列数
+indent_size = 4
+# 设置换行符
+end_of_line = crlf
+# 在文件末尾插入一个新行
+insert_final_newline = true
+# 去除行尾的空白字符
+trim_trailing_whitespace = true
+
+# 对于特定文件类型的配置
+[*.md]
+trim_trailing_whitespace = false
+
+[*.{js,jsx,ts,tsx,vue}]
+quote_type = single
+
+[*.{html,less,css,json}]
+quote_type = double
+
+[package.json]
+indent_size = 2
