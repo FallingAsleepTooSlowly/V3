@@ -11,7 +11,7 @@
                         <el-input class="login-pass-word input-box up-animation"></el-input>
                         <el-input class="login-code input-box up-animation"></el-input>
                         <div class="login-btn-box">
-                            <el-button type="primary" class="login-confirm up-animation" @click="loginIn">确定</el-button>
+                            <el-button type="primary" class="login-confirm up-animation" @click="login">确定</el-button>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="手机号登陆" name="second">
@@ -21,6 +21,9 @@
             </div>
         </div>
     </div>
+    <div>
+        <el-button type="success" @click="checkToken">校验token</el-button>
+    </div>
 </div>
 </template>
 
@@ -28,7 +31,8 @@
 // import { ref } from 'vue';
 import type { TabsPaneContext } from 'element-plus'
 import { useChangeColor } from '@/utils/theme'
-import { userPostApi } from '@/api/user'
+// import { userPostApi } from '@/api/user'
+import userApi from '@/api/user'
 import { useRoute, useRouter } from 'vue-router'
 import { Session } from '@/utils/storage'
 
@@ -45,14 +49,24 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
     console.log("activeName===>", activeName.value)
 }
 
-function userPost() {
-    userPostApi({
+// 登陆接口
+function login() {
+    userApi.login({
         name: "ganhuan"
     }).then(res => {
         console.log('userPost=====>', res)
+        window.localStorage.setItem("token", res.token)
     }).catch(e => {
         console.log('eeeee===>', e)
     })
+}
+
+// 校验 token 接口
+function checkToken() {
+    userApi.checkToken().then(res => {
+        console.log('checkToken===>', res)
+    })
+
 }
 
 function loginIn() {
@@ -93,7 +107,7 @@ function changeTheme() {
         }
     }
 }
-    
+
 </script>
 
 <style scoped lang="scss">

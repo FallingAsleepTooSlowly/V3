@@ -3,6 +3,13 @@ import type { AxiosInstance } from 'axios'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Session } from '@/utils/storage'
 
+// 处理 类型“AxiosResponse<any, any>”上不存在属性“token” 的问题，即处理 typeScript 无法识别 Axios 响应对象中的自定义属性的问题
+declare module 'axios' {
+    interface AxiosInstance {
+        (config: AxiosRequestConfig): Promise<any>
+    }
+}
+
 // 创建一个 axios 实例
 // 参数详见 https://www.axios-http.cn/docs/req_config
 const axiosInstance: AxiosInstance = axios.create({
@@ -29,13 +36,13 @@ const axiosInstance: AxiosInstance = axios.create({
     */
     // transformRequest: [function (data, headers) {
     //     // 对发送的 data 进行任意转换处理
-    
+
     //     return data;
     // }],+
     // transformResponse 在传递给 then/catch 前，允许修改响应数据
     // transformResponse: [function (data) {
     //     // 对接收的 data 进行任意转换处理
-    
+
     //     return data;
     // }],
 })
@@ -44,9 +51,13 @@ const axiosInstance: AxiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     (config) => {
 		// 在发送请求之前做些什么 token
-		if (Session.get('token')) {
-			config.headers!['Authorization'] = `${Session.get('token')}`;
-		}
+		// if (Session.get('token')) {
+		// 	config.headers!['Authorization'] = `${Session.get('token')}`;
+        // }
+        if (window.localStorage.getItem('token')) {
+            // ! 在 TS 中是非空断言操作符，表示此处的值可能是也可能不是 null/undefined
+            config.headers!['token'] = window.localStorage.getItem('token')
+        }
 		return config;
 	},
 	(error) => {
@@ -77,7 +88,8 @@ axiosInstance.interceptors.response.use(
 			return res;
 		}
 	},
-	(error) => {
+    (error) => {
+        console.log('error===>', error)
 		// 对响应错误做点什么
 		if (error.message.indexOf('timeout') != -1) {
 			ElMessage.error('网络超时');
