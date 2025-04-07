@@ -52,7 +52,8 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 // 登陆接口
 function login() {
     userApi.login({
-        name: "ganhuan"
+        name: "ganhuan",
+        password: "1234567"
     }).then(res => {
         console.log('userPost=====>', res)
         window.localStorage.setItem("token", res.token)
