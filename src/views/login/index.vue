@@ -29,12 +29,12 @@
 
 <script lang="ts" setup>
 // import { ref } from 'vue';
-import type { TabsPaneContext } from 'element-plus'
-import { useChangeColor } from '@/utils/theme'
-// import { userPostApi } from '@/api/user'
-import userApi from '@/api/user'
-import { useRoute, useRouter } from 'vue-router'
-import { Session } from '@/utils/storage'
+import type { TabsPaneContext } from 'element-plus';
+import { useChangeColor } from '@/utils/theme';
+// import { userPostApi } from '@/api/user';
+import userApi from '@/api/user';
+import { useRoute, useRouter } from 'vue-router';
+import { Session } from '@/utils/storage';
 
 const route = useRoute()
 const router = useRouter()
