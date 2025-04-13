@@ -1,6 +1,8 @@
 <template>
-    <div class="error"><svg-icon icon-name="vue" />404<i-ep-CloseBold /></div>
-    <div><el-button type="primary" @click="onGoHome">回到首页</el-button></div>
+    <div class="error">
+        <svg-icon icon-name="vue" />404<i-ep-CloseBold />
+        <div><el-button type="primary" @click="onGoHome">回到首页</el-button></div>
+    </div>
 </template>
 
 <!-- <keep-alive> 的 include 和 exclude 属性根据组件的 name 进行匹配，如果想要条件性地被 keep-alive 缓存，就必须显式声明一个 name 属性 -->

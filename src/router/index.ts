@@ -1,7 +1,10 @@
 // 路由配置
-import routes from './routes';
+import { staticRoutes, notFoundAndNoPower } from './routes';
 import { createRouter, createWebHashHistory } from 'vue-router';
-import { Session } from '@/utils/storage'
+// import { Session } from '@/utils/storage';
+import { useRoutesList } from '@/stores/routesList';
+import { initFrontControlRoutes } from './front';
+import { storeToRefs } from 'pinia';
 /*
     nprogress 是前端轻量级 web 进度条插件，一般搭配路由守卫使用
     安装：npm install nprogress
@@ -21,7 +24,7 @@ import { Session } from '@/utils/storage'
 */
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
- 
+
 // 创建路由配置
 export const router = createRouter({
     /*
@@ -35,16 +38,20 @@ export const router = createRouter({
             例如：/#/home、/#/about。这种模式可以避免服务器配置的问题，而且支持所有浏览器。但是，由于 URL 中添加了 hash，因此在搜索引擎的 SEO 优化中存在一些问题。
     */
     history: createWebHashHistory(),
-    routes: [...routes]
+    routes: [...staticRoutes, ...notFoundAndNoPower]
 });
 
 // 全局前置守卫
 router.beforeEach(async (to, from, next) => {
-    console.log("to.path=====>", to.path)
+    console.log("to=====>", to)
     NProgress.configure({ showSpinner: false })
     if (to.meta.title) NProgress.start()
-    const token = Session.get('token')
-    Session.clear();
+    // // 获取到前端自己保存的 token
+    // const token = Session.get('token')
+    // // 清除前端的所有 token
+    // Session.clear()
+    // 获取到后端返回并存储好的 token
+    const token = window.localStorage.getItem('token')
     if (to.path === '/login' && !token) {
         next()
 		NProgress.done()
@@ -52,20 +59,29 @@ router.beforeEach(async (to, from, next) => {
         console.log("token===>", token)
         if (!token) {
 			next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
-			Session.clear();
-			NProgress.done();
+			// Session.clear();
+			NProgress.done()
 		} else if (token && to.path === '/login') {
-			next('/home');
-			NProgress.done();
+			next('/home')
+			NProgress.done()
         } else {
+            const { routesList } = storeToRefs(useRoutesList())
+            console.log('routesList=====>', routesList.value)
+            // if (routesList.value.length === 0) {
+            //     next('/login')
+            //     NProgress.done()
+            // } else {
+            //     next()
+            //     NProgress.done()
+            // }
             next()
-            NProgress.done();
+            NProgress.done()
         }
     }
 });
- 
+
 // 全局后置守卫
-router.afterEach((to, from) => { 
+router.afterEach((to, from) => {
     NProgress.done()
 });
 

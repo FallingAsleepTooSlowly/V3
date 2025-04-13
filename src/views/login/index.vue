@@ -11,7 +11,7 @@
                         <el-input class="login-pass-word input-box up-animation"></el-input>
                         <el-input class="login-code input-box up-animation"></el-input>
                         <div class="login-btn-box">
-                            <el-button type="primary" class="login-confirm up-animation" @click="login">确定</el-button>
+                            <el-button type="primary" class="login-confirm up-animation" @click="loginIn">确定</el-button>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="手机号登陆" name="second">
@@ -34,7 +34,7 @@ import { useChangeColor } from '@/utils/theme';
 // import { userPostApi } from '@/api/user';
 import userApi from '@/api/user';
 import { useRoute, useRouter } from 'vue-router';
-import { Session } from '@/utils/storage';
+// import { Session } from '@/utils/storage';
 
 const route = useRoute()
 const router = useRouter()
@@ -53,10 +53,22 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 function login() {
     userApi.login({
         name: "ganhuan",
-        password: "1234567"
+        password: "123456"
     }).then(res => {
         console.log('userPost=====>', res)
-        window.localStorage.setItem("token", res.token)
+        if (res.data) {
+            // 前端自己生成 token 并保存到本地
+            // Session.set('token', Math.random().toString(36).substring(0));
+            // 保存后端返回的 token 到本地
+            window.localStorage.setItem("token", res.token)
+            // 跳转到预先要跳转的页面
+            if (route.query?.redirect) {
+                router.push({
+                    path: <string>route.query?.redirect,
+                    query: Object.keys(<string>route.query?.params).length > 0 ? JSON.parse(<string>route.query?.params) : '',
+                })
+            }
+        }
     }).catch(e => {
         console.log('eeeee===>', e)
     })
@@ -71,8 +83,9 @@ function checkToken() {
 }
 
 function loginIn() {
-    Session.set('token', Math.random().toString(36).substring(0));
-    console.log('string===>', JSON.parse(<string>route.query?.params))
+    // Session.set('token', Math.random().toString(36).substring(0));
+    // console.log('string===>', JSON.parse(<string>route.query?.params))
+    console.log('string===>', route.query?.redirect)
     if (route.query?.redirect) {
         router.push({
             path: <string>route.query?.redirect,
