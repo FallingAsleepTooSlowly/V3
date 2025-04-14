@@ -67,15 +67,16 @@ router.beforeEach(async (to, from, next) => {
         } else {
             const { routesList } = storeToRefs(useRoutesList())
             console.log('routesList=====>', routesList.value)
-            // if (routesList.value.length === 0) {
-            //     next('/login')
-            //     NProgress.done()
-            // } else {
-            //     next()
-            //     NProgress.done()
-            // }
-            next()
-            NProgress.done()
+            if (routesList.value.length === 0) {
+                await initFrontControlRoutes()
+                next({ path: to.path, query: to.query })
+                NProgress.done()
+            } else {
+                next()
+                NProgress.done()
+            }
+            // next()
+            // NProgress.done()
         }
     }
 });

@@ -19,12 +19,14 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
             {
                 path: '/home',
                 name: 'home',
-                component: () => import("@/views/home/index.vue")
+                component: () => import("@/views/home/index.vue"),
+                meta: {}
             },
             {
                 path: '/user',
                 name: 'user',
-                component: () => import("@/views/user/index.vue")
+                component: () => import("@/views/user/index.vue"),
+                meta: {}
             }
         ]
     }
@@ -37,7 +39,8 @@ export const staticRoutes: Array<RouteRecordRaw> = [
     {
         path: '/login',
         name: 'login',
-        component: () => import("@/views/login/index.vue")
+        component: () => import("@/views/login/index.vue"),
+        meta: {}
     }
 ]
 // export default [
@@ -79,6 +82,7 @@ export const notFoundAndNoPower: Array<RouteRecordRaw> = [
     {
         path: '/401',
         name: 'NoPower',
-        component: () => import("@/views/error/401.vue")
+        component: () => import("@/views/error/401.vue"),
+        meta: {}
     },
 ]

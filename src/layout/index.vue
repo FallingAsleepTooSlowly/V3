@@ -1,5 +1,8 @@
 <template>
-    <component :is="layouts[themeConfig.layout]"></component>
+    <div>
+        <div>??????????????</div>
+        <component :is="layouts[themeConfig.layout]"></component>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -8,7 +11,7 @@ import { storeToRefs } from 'pinia';
 
 //---------- 引入组件
 const layouts: any = {
-    default: defineAsyncComponent(() => import('@/layout/main/defaults.vue'))
+    defaults: defineAsyncComponent(() => import('@/layout/main/defaults.vue'))
 }
 
 //---------- 定义变量
@@ -19,6 +22,9 @@ const { themeConfig } = storeToRefs(storesThemeConfig)
 //---------- 生命周期
 onBeforeMount(() => {
     window.addEventListener('resize', latoutResize)
+})
+onMounted(() => {
+    console.log('themeConfig.layout====>', themeConfig.value.layout)
 })
 
 //---------- 定义方法
