@@ -29,3 +29,6 @@ quote_type = double
 
 [package.json]
 indent_size = 2
+
+[auto-imports.d.ts]
+end_of_line = crlf

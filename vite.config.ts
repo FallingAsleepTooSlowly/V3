@@ -20,7 +20,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 // 安装 Element Plus 图标自动导入的插件：npm i -D unplugin-icons
 // 安装 iconify 图标库中指定的 Element Plus 图标，对应的图标集名叫 ep，即：npm i -D @iconify-json/ep
 // 使用方式如下，其中图标必须使用为 <i-ep-xxx /> 或 <IEpSearch />
-/* 
+/*
     <el-icon :size="size" :color="color">
       <i-ep-Search />
       <IEpSearch />
@@ -47,7 +47,7 @@ export default defineConfig(() => {
             open: true,
             // 代理设置
             proxy: {
-                /* 
+                /*
                 假设你要调取的接口是 http://aaa.net/api/test，然后你可以在本地调 localhost:8080/api/test，如axios.get('/api/test')
                 配置代理后，会做如下转发：
                 localhost:8080/api/test -> http://aaa.net/api/test
@@ -80,7 +80,7 @@ export default defineConfig(() => {
         plugins: [
             vue(),
             // 配置 SVG 插件，配置后图标会注册到全局，可以以以下方法直接使用它们，无需显示的导入每个图标，demo 是 SVG 图标的名字
-            /* 
+            /*
                 <svg>
                     <use :xlink:href="`#icon-demo`"></use>
                 </svg>
@@ -102,7 +102,7 @@ export default defineConfig(() => {
                 // 自动导入 vue3 的 hooks，导入后就不用再 import { ref, computed } from 'vue'
                 imports: ['vue', 'vue-router', 'vue-i18n', '@vueuse/head', '@vueuse/core'],
                 // 可以选择auto-import.d.ts生成的位置，使用ts建议设置为'src/auto-import.d.ts'
-                dts: 'src/auto-import.d.ts'
+                // dts: 'src/auto-import.d.ts'
             }),
             // 自动导入组件的配置
             Components({
