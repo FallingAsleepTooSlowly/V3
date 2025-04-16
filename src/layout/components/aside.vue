@@ -1,6 +1,6 @@
 <template>
     <div>
-        default main default main
+
     </div>
 </template>
 
