@@ -1,8 +1,5 @@
 <template>
-    <div>
-        <div>??????????????</div>
-        <component :is="layouts[themeConfig.layout]"></component>
-    </div>
+    <component :is="layouts[themeConfig.layout]"></component>
 </template>
 
 <script setup lang="ts">

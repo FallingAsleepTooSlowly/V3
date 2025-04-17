@@ -24,6 +24,7 @@ import { storeToRefs } from 'pinia';
 */
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
+import userApi from '@/api/user';
 
 // 创建路由配置
 export const router = createRouter({
@@ -65,21 +66,36 @@ router.beforeEach(async (to, from, next) => {
 			next('/home')
 			NProgress.done()
         } else {
-            const { routesList } = storeToRefs(useRoutesList())
-            console.log('routesList=====>', routesList.value)
-            if (routesList.value.length === 0) {
-                await initFrontControlRoutes()
-                next({ path: to.path, query: to.query })
-                NProgress.done()
-            } else {
-                next()
-                NProgress.done()
-            }
-            // next()
-            // NProgress.done()
+            // 校验 token
+            checkToken(to, from, next)
         }
     }
 });
+
+// 校验 token
+function checkToken(to: any, from: any, next: any) {
+    userApi.checkToken().then(async res => {
+        const { routesList } = storeToRefs(useRoutesList())
+        console.log('???routesList=====>', routesList.value)
+        if (routesList.value.length === 0) {
+            await initFrontControlRoutes()
+            next({ path: to.path, query: to.query })
+            NProgress.done()
+        } else {
+            next()
+            NProgress.done()
+        }
+    }).catch(e => {
+        // 若 token 校验失败，则弹提示并删除 token
+        ElMessage({
+            message: e.message,
+            type: 'error',
+        })
+        window.localStorage.removeItem('token')
+        next('/login')
+        NProgress.done()
+    })
+}
 
 // 全局后置守卫
 router.afterEach((to, from) => {
