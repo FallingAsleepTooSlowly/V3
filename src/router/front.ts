@@ -63,5 +63,6 @@ export function setFilterRoute(chil: any) {
 */
 export function setFilterMenuAndCacheTagsViewRoutes() {
     const storesRoutesList = useRoutesList()
-    storesRoutesList.setRoutesList(dynamicRoutes[0].children as any)
+    // storesRoutesList.setRoutesList(dynamicRoutes[0].children as any)
+    storesRoutesList.setRoutesList([...dynamicRoutes[0].children as any, ...notFoundAndNoPower])
 }

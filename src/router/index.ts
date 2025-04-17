@@ -67,34 +67,41 @@ router.beforeEach(async (to, from, next) => {
 			NProgress.done()
         } else {
             // 校验 token
-            checkToken(to, from, next)
+            let res = await checkToken()
+            console.log('resresresresresres===========>', res)
+            if (res) {
+                const { routesList } = storeToRefs(useRoutesList())
+                console.log('???routesList=====>', routesList.value)
+                if (routesList.value.length === 0) {
+                    await initFrontControlRoutes()
+                    next({ path: to.path, query: to.query })
+                    NProgress.done()
+                } else {
+                    next()
+                    NProgress.done()
+                }
+            } else {
+                next('/login')
+                NProgress.done()
+            }
         }
     }
 });
 
 // 校验 token
-function checkToken(to: any, from: any, next: any) {
-    userApi.checkToken().then(async res => {
-        const { routesList } = storeToRefs(useRoutesList())
-        console.log('???routesList=====>', routesList.value)
-        if (routesList.value.length === 0) {
-            await initFrontControlRoutes()
-            next({ path: to.path, query: to.query })
-            NProgress.done()
-        } else {
-            next()
-            NProgress.done()
-        }
-    }).catch(e => {
+async function checkToken() {
+    try {
+        const res = await userApi.checkToken()
+        return res
+    } catch (error: any) {
         // 若 token 校验失败，则弹提示并删除 token
         ElMessage({
-            message: e.message,
+            message: error.message,
             type: 'error',
         })
         window.localStorage.removeItem('token')
-        next('/login')
-        NProgress.done()
-    })
+        return false
+    }
 }
 
 // 全局后置守卫

@@ -81,11 +81,9 @@ axiosInstance.interceptors.response.use(
 					.then(() => {})
 					.catch(() => {});
 			}
-			console.log('AAAAAA')
 			// return Promise.reject(axiosInstance.interceptors.response);
 			return Promise.reject(res);
 		} else {
-			console.log('EEEEEE')
 			return res;
 		}
 	},

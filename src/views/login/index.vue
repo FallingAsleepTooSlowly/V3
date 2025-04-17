@@ -11,7 +11,7 @@
                         <el-input class="login-pass-word input-box up-animation"></el-input>
                         <el-input class="login-code input-box up-animation"></el-input>
                         <div class="login-btn-box">
-                            <el-button type="primary" class="login-confirm up-animation" @click="loginIn">确定</el-button>
+                            <el-button type="primary" class="login-confirm up-animation" @click="login">确定</el-button>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="手机号登陆" name="second">
@@ -66,6 +66,10 @@ function login() {
                 router.push({
                     path: <string>route.query?.redirect,
                     query: Object.keys(<string>route.query?.params).length > 0 ? JSON.parse(<string>route.query?.params) : '',
+                })
+            } else {
+                router.push({
+                    path: '/'
                 })
             }
         }

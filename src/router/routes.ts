@@ -65,7 +65,8 @@ export const staticRoutes: Array<RouteRecordRaw> = [
 export const notFoundAndNoPower: Array<RouteRecordRaw> = [
     // 将匹配所有内容并将其放在 `route.params.pathMatch` 下
     {
-        path: '/:pathMatch(.*)*',
+        // path: '/:pathMatch(.*)*',
+        path: '/:catchAll(.*)',
         name: 'NotFound',
         component: () => import("@/views/error/404.vue"),
         // 路由的参数

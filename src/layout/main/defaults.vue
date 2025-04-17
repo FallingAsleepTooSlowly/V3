@@ -3,6 +3,7 @@
         <LayoutAside />
         <el-container class="h100">
             <el-button type="success" @click="checkToken">校验token</el-button>
+            <el-button type="danger" @click="logOut">退出登陆</el-button>
             default main default main
         </el-container>
     </el-container>
@@ -25,7 +26,7 @@ onMounted(() => {
     // checkToken()
 })
 
-// ----------- 函数
+// ---------------- 函数
 // 校验 token
 function checkToken () {
     userApi.checkToken().catch(e => {
@@ -37,5 +38,12 @@ function checkToken () {
             path: '/login'
         })
     })
+}
+// 退出登陆
+function logOut() {
+    // 清除 token，会自动跳转到登陆页面
+    window.localStorage.removeItem('token')
+    // 使用 reload 时，不需要调用 resetRoute() 重置路由
+    window.location.reload()
 }
 </script>
