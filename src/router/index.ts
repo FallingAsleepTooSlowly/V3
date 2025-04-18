@@ -77,6 +77,7 @@ router.beforeEach(async (to, from, next) => {
                     next({ path: to.path, query: to.query })
                     NProgress.done()
                 } else {
+                    console.log('routerrouterrouter===>', router)
                     next()
                     NProgress.done()
                 }

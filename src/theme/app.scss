@@ -76,4 +76,10 @@ html {
     .layout-aside {
         display: flex;
     }
+    .layout-main {
+        overflow: hidden;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
 }

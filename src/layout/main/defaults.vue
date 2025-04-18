@@ -1,10 +1,10 @@
 <template>
     <el-container class="layout-container">
         <LayoutAside />
-        <el-container class="h100">
+        <el-container class="h100" style="display: flex; flex-direction: column;">
             <el-button type="success" @click="checkToken">校验token</el-button>
             <el-button type="danger" @click="logOut">退出登陆</el-button>
-            default main default main
+            <LayoutMain />
         </el-container>
     </el-container>
 </template>
@@ -15,6 +15,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 // ---------------- 引入组件
 const LayoutAside = defineAsyncComponent(() => import('@/layout/components/aside.vue'))
+const LayoutMain = defineAsyncComponent(() => import('@/layout/components/main.vue'))
 
 // ---------------- 定义变量
 const route = useRoute()
@@ -29,7 +30,12 @@ onMounted(() => {
 // ---------------- 函数
 // 校验 token
 function checkToken () {
-    userApi.checkToken().catch(e => {
+    userApi.checkToken().then(() => {
+        ElMessage({
+            message: 'token 校验成功',
+            type: 'success',
+        })
+    }).catch(e => {
         ElMessage({
             message: e.message,
             type: 'error',

@@ -12,6 +12,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
         path: '/',
         name: '/',
         component: () => import("@/layout/index.vue"),
+        redirect: '/home',
         meta: {
             isKeepAlive: true
         },
@@ -65,8 +66,7 @@ export const staticRoutes: Array<RouteRecordRaw> = [
 export const notFoundAndNoPower: Array<RouteRecordRaw> = [
     // 将匹配所有内容并将其放在 `route.params.pathMatch` 下
     {
-        // path: '/:pathMatch(.*)*',
-        path: '/:catchAll(.*)',
+        path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: () => import("@/views/error/404.vue"),
         // 路由的参数
