@@ -18,6 +18,18 @@ const { routesList } = storeToRefs(useRoutesList())
 
 // -------------- 生命周期
 onMounted(() => {
-    console.log('routesList=====>', routesList.value)
+    filterRoutesFun(routesList.value)
 })
+
+// -------------- 定义函数
+// 路由过滤递归函数
+function filterRoutesFun(routerArr: Array<String>) {
+    console.log('routerArr====>', routerArr)
+    return routerArr
+        .filter((item: any) => { !item.meta?.isHide })
+        .map((item: any) => {
+            // 拷贝一份
+            item = Object.assign({}, item)
+        })
+}
 </script>
