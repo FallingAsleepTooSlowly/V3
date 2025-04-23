@@ -57,7 +57,6 @@ router.beforeEach(async (to, from, next) => {
         next()
 		NProgress.done()
     } else {
-        console.log("token===>", token)
         if (!token) {
 			next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
 			// Session.clear();
@@ -68,16 +67,13 @@ router.beforeEach(async (to, from, next) => {
         } else {
             // 校验 token
             let res = await checkToken()
-            console.log('resresresresresres===========>', res)
             if (res) {
                 const { routesList } = storeToRefs(useRoutesList())
-                console.log('???routesList=====>', routesList.value)
                 if (routesList.value.length === 0) {
                     await initFrontControlRoutes()
                     next({ path: to.path, query: to.query })
                     NProgress.done()
                 } else {
-                    console.log('routerrouterrouter===>', router)
                     next()
                     NProgress.done()
                 }
