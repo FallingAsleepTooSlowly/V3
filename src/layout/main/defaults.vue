@@ -12,6 +12,7 @@
 <script setup lang="ts">
 import userApi from '@/api/user';
 import { useRoute, useRouter } from 'vue-router';
+import { Session } from '@/utils/storage';
 
 // ---------------- 引入组件
 const LayoutAside = defineAsyncComponent(() => import('@/layout/components/aside.vue'))
@@ -48,7 +49,7 @@ function checkToken () {
 // 退出登陆
 function logOut() {
     // 清除 token，会自动跳转到登陆页面
-    window.localStorage.removeItem('token')
+    Session.remove('token')
     // 使用 reload 时，不需要调用 resetRoute() 重置路由
     window.location.reload()
 }

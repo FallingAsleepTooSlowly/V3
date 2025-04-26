@@ -2,7 +2,25 @@
     <div class="h100">
         <el-aside class="h100" style="background: purple;">
             <el-scrollbar>
-
+                <el-menu
+                    default-active="1"
+                    router
+                >
+                    <template v-for="val in state.menuList">
+                        <!-- 有子项 -->
+                        <el-sub-menu v-if="val.children && val.children.length" :index="val.path" :key="val.path">
+                            <i-ep-Document />
+                            <span>{{ val?.meta?.title }}</span>
+                        </el-sub-menu>
+                        <!-- 无子项 -->
+                        <template v-else>
+                            <el-menu-item :index="val.path" :key="val.path">
+                                <i-ep-Document />
+                                <span @click="clickMenuLink(val)">{{ val?.meta?.title }}</span>
+                            </el-menu-item>
+                        </template>
+                    </template>
+                </el-menu>
             </el-scrollbar>
         </el-aside>
     </div>
@@ -42,5 +60,9 @@ function filterRoutesFun(routerArr: Array<String>) {
             }
             return item
         })
+}
+// 点击菜单跳转
+function clickMenuLink(val: any) {
+    console.log('val====>', val)
 }
 </script>

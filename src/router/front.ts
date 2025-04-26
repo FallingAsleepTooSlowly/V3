@@ -5,13 +5,14 @@ import { formatFlatteningRoutes, formatTwoStageRoutes } from '@/utils/tools'
 import { dynamicRoutes, notFoundAndNoPower } from '@/router/routes'
 import { router } from '@/router/index'
 import { useRoutesList } from '@/stores/routesList'
+import { Session } from '@/utils/storage';
 
 /**
  * 前端控制路由：初始化方法，防止刷新时路由丢失
 */
 export async function initFrontControlRoutes() {
     // 无 token 时停止执行下一步
-    if (!window.localStorage.getItem('token')) return
+    if (!Session.get('token')) return
     // 1 添加动态路由
     await setAddRoute()
     // 2 设置递归过滤有权限的路由到 pinia routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组

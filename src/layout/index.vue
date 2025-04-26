@@ -17,15 +17,20 @@ const storesThemeConfig = useThemeConfig()
 const { themeConfig } = storeToRefs(storesThemeConfig)
 
 //---------- 生命周期
-onBeforeMount(() => {
-    window.addEventListener('resize', latoutResize)
-})
 onMounted(() => {
     console.log('themeConfig.layout====>', themeConfig.value.layout)
 })
+// 页面加载前
+onBeforeMount(() => {
+    window.addEventListener('resize', onLatoutResize)
+})
+// 页面卸载时
+onUnmounted(() => {
+    window.removeEventListener('resize', onLatoutResize)
+})
 
 //---------- 定义方法
-const latoutResize = () => {
+const onLatoutResize = () => {
     const clientWidth = document.body.clientWidth
     console.log('clientWidth===========>', clientWidth)
 }

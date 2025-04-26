@@ -21,13 +21,36 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                 path: '/home',
                 name: 'home',
                 component: () => import("@/views/home/index.vue"),
-                meta: {}
+                meta: {
+                    title: '首页',
+                    roles: ['admin', 'common']
+                }
             },
             {
                 path: '/user',
                 name: 'user',
                 component: () => import("@/views/user/index.vue"),
-                meta: {}
+                meta: {
+                    title: '用户信息',
+                    roles: ['admin', 'common']
+                }
+            },
+            {
+                path: '/account',
+                name: 'account',
+                component: () => import("@/views/account/index.vue"),
+                meta: {
+                    title: '门店账号管理',
+                    roles: ['admin']
+                }
+            },
+            {
+                path: '/developerPage',
+                name: 'developerPage',
+                component: () => import("@/views/developerPage/index.vue"),
+                meta: {
+                    title: '开发者页面'
+                }
             }
         ]
     }
@@ -41,7 +64,9 @@ export const staticRoutes: Array<RouteRecordRaw> = [
         path: '/login',
         name: 'login',
         component: () => import("@/views/login/index.vue"),
-        meta: {}
+        meta: {
+            title: '登陆'
+        }
     }
 ]
 // export default [
@@ -84,6 +109,8 @@ export const notFoundAndNoPower: Array<RouteRecordRaw> = [
         path: '/401',
         name: 'NoPower',
         component: () => import("@/views/error/401.vue"),
-        meta: {}
+        meta: {
+            isHide: true
+        }
     },
 ]

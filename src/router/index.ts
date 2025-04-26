@@ -1,7 +1,7 @@
 // 路由配置
 import { staticRoutes, notFoundAndNoPower } from './routes';
 import { createRouter, createWebHashHistory } from 'vue-router';
-// import { Session } from '@/utils/storage';
+import { Session } from '@/utils/storage';
 import { useRoutesList } from '@/stores/routesList';
 import { initFrontControlRoutes } from './front';
 import { storeToRefs } from 'pinia';
@@ -52,7 +52,7 @@ router.beforeEach(async (to, from, next) => {
     // // 清除前端的所有 token
     // Session.clear()
     // 获取到后端返回并存储好的 token
-    const token = window.localStorage.getItem('token')
+    const token = Session.get('token')
     if (to.path === '/login' && !token) {
         next()
 		NProgress.done()
@@ -96,7 +96,7 @@ async function checkToken() {
             message: error.message,
             type: 'error',
         })
-        window.localStorage.removeItem('token')
+        Session.remove('token')
         return false
     }
 }

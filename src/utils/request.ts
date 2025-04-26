@@ -54,9 +54,9 @@ axiosInstance.interceptors.request.use(
 		// if (Session.get('token')) {
 		// 	config.headers!['Authorization'] = `${Session.get('token')}`;
         // }
-        if (window.localStorage.getItem('token')) {
+        if (Session.get('token')) {
             // ! 在 TS 中是非空断言操作符，表示此处的值可能是也可能不是 null/undefined
-            config.headers!['token'] = window.localStorage.getItem('token')
+            config.headers!['token'] = Session.get('token')
         }
 		return config;
 	},

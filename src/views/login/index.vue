@@ -22,7 +22,7 @@
         </div>
     </div>
     <div>
-        <el-button type="success" @click="checkToken">校验token</el-button>
+        <el-button type="success" @click="checkLogin">校验登陆</el-button>
     </div>
 </div>
 </template>
@@ -34,10 +34,15 @@ import { useChangeColor } from '@/utils/theme';
 // import { userPostApi } from '@/api/user';
 import userApi from '@/api/user';
 import { useRoute, useRouter } from 'vue-router';
-// import { Session } from '@/utils/storage';
+import { Session } from '@/utils/storage';
+import { useUserInfo } from '@/stores/userInfo'
 
+// -------------- 定义变量
 const route = useRoute()
 const router = useRouter()
+const storesUserInfo = useUserInfo()
+
+// -------------- 定义函数
 // 变更主题的方法
 const { getDarkColor, getLightColor } = useChangeColor()
 
@@ -60,7 +65,7 @@ function login() {
             // 前端自己生成 token 并保存到本地
             // Session.set('token', Math.random().toString(36).substring(0));
             // 保存后端返回的 token 到本地
-            window.localStorage.setItem("token", res.token)
+            Session.set('token', res.token)
             // 跳转到预先要跳转的页面
             if (route.query?.redirect) {
                 router.push({
@@ -78,12 +83,10 @@ function login() {
     })
 }
 
-// 校验 token 接口
-function checkToken() {
-    userApi.checkToken().then(res => {
-        console.log('checkToken===>', res)
-    })
-
+// 校验 login 存储调用
+async function checkLogin() {
+    let res = await storesUserInfo.getApiUserInfo()
+    console.log('checkLogincheckLogin=====>', res)
 }
 
 function loginIn() {
