@@ -44,7 +44,7 @@ export const router = createRouter({
 
 // 全局前置守卫
 router.beforeEach(async (to, from, next) => {
-    console.log("to=====>", to)
+    // console.log("to=====>", to)
     NProgress.configure({ showSpinner: false })
     if (to.meta.title) NProgress.start()
     // // 获取到前端自己保存的 token
@@ -69,6 +69,7 @@ router.beforeEach(async (to, from, next) => {
             let res = await checkToken()
             if (res) {
                 const { routesList } = storeToRefs(useRoutesList())
+                console.log('routesList----->', routesList)
                 if (routesList.value.length === 0) {
                     await initFrontControlRoutes()
                     next({ path: to.path, query: to.query })
