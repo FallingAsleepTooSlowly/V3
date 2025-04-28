@@ -6,7 +6,7 @@ import { Session } from "@/utils/storage";
  * 用户信息
 */
 export const useUserInfo = defineStore('userInfo', {
-    state: () => ({
+    state: (): UserInfosState => ({
         userInfo: {
             // 用户名
             userName: '',
@@ -17,6 +17,7 @@ export const useUserInfo = defineStore('userInfo', {
         }
     }),
     actions: {
+        // 将用户信息保存到全局，若 token 校验通过但 session 内无用户信息则调用接口获取并保存
         async setUserInfo() {
             console.log('userInfo=====>', Session.get('userInfo'))
             Session.remove('userInfo')
@@ -25,7 +26,6 @@ export const useUserInfo = defineStore('userInfo', {
                 this.userInfo = Session.get('userInfo')
             } else {
                 const theUserInfo = <UserInfo>await this.getApiUserInfo()
-                console.log('getApiUserInfo====>', theUserInfo)
                 this.userInfo = theUserInfo
             }
         },
