@@ -21,7 +21,7 @@ export async function initFrontControlRoutes() {
     if (useUserInfo().userInfo.roles.length <= 0) {
         return Promise.resolve(true)
     }
-    // 1 添加动态路由
+    // 1 添加动态路由到 vue-router 里
     await setAddRoute()
     // 2 设置递归过滤有权限的路由到 pinia routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
     setFilterMenuAndCacheTagsViewRoutes()
@@ -78,5 +78,6 @@ export function setFilterRoute(chil: any) {
 export function setFilterMenuAndCacheTagsViewRoutes() {
     const storesRoutesList = useRoutesList()
     // storesRoutesList.setRoutesList(dynamicRoutes[0].children as any)
+    // 保存左侧菜单、横向菜单的展示
     storesRoutesList.setRoutesList([...dynamicRoutes[0].children as any, ...notFoundAndNoPower])
 }
