@@ -49,7 +49,8 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                 name: 'developerPage',
                 component: () => import("@/views/developerPage/index.vue"),
                 meta: {
-                    title: '开发者页面'
+                    title: '开发者页面',
+                    roles: ['dev']
                 }
             }
         ]

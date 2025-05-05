@@ -69,7 +69,7 @@ router.beforeEach(async (to, from, next) => {
             let res = await checkToken()
             if (res) {
                 const { routesList } = storeToRefs(useRoutesList())
-                console.log('routesList----->', routesList)
+                console.log('routesList----->', routesList.value.length)
                 if (routesList.value.length === 0) {
                     await initFrontControlRoutes()
                     next({ path: to.path, query: to.query })

@@ -66,6 +66,8 @@ function login() {
             // Session.set('token', Math.random().toString(36).substring(0));
             // 保存后端返回的 token 到本地
             Session.set('token', res.token)
+            // 保存用户信息到本地
+            Session.set('userInfo', res.data)
             // 跳转到预先要跳转的页面
             if (route.query?.redirect) {
                 router.push({
@@ -87,18 +89,6 @@ function login() {
 async function checkLogin() {
     let res = await storesUserInfo.getApiUserInfo()
     console.log('checkLogincheckLogin=====>', res)
-}
-
-function loginIn() {
-    // Session.set('token', Math.random().toString(36).substring(0));
-    // console.log('string===>', JSON.parse(<string>route.query?.params))
-    console.log('string===>', route.query?.redirect)
-    if (route.query?.redirect) {
-        router.push({
-            path: <string>route.query?.redirect,
-            query: Object.keys(<string>route.query?.params).length > 0 ? JSON.parse(<string>route.query?.params) : '',
-        })
-    }
 }
 
 // 修改主题颜色
