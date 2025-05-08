@@ -35,7 +35,8 @@ import { useChangeColor } from '@/utils/theme';
 import userApi from '@/api/user';
 import { useRoute, useRouter } from 'vue-router';
 import { Session } from '@/utils/storage';
-import { useUserInfo } from '@/stores/userInfo'
+import { useUserInfo } from '@/stores/userInfo';
+import { initFrontControlRoutes } from '@/router/front'
 
 // -------------- 定义变量
 const route = useRoute()
@@ -68,25 +69,38 @@ function login() {
             Session.set('token', res.token)
             // 保存用户信息到本地
             Session.set('userInfo', res.data)
-            // 跳转到预先要跳转的页面
-            if (route.query?.redirect) {
-                router.push({
-                    path: <string>route.query?.redirect,
-                    query: Object.keys(<string>route.query?.params).length > 0 ? JSON.parse(<string>route.query?.params) : '',
-                })
-            } else {
-                router.push({
-                    path: '/'
-                })
-            }
+
+            afterLogin()
         }
     }).catch(e => {
         console.log('eeeee===>', e)
     })
 }
 
+// 登陆成功后的跳转
+async function afterLogin () {
+    // 执行动态路由初始化
+    const checkPermission = await initFrontControlRoutes()
+    if (checkPermission) {
+        ElMessage.warning("抱歉，您没有登录权限")
+        Session.clear()
+    } else {
+        // 跳转到预先要跳转的页面
+        if (route.query?.redirect) {
+            router.push({
+                path: <string>route.query?.redirect,
+                query: Object.keys(<string>route.query?.params).length > 0 ? JSON.parse(<string>route.query?.params) : '',
+            })
+        } else {
+            router.push({
+                path: '/'
+            })
+        }
+    }
+}
+
 // 校验 login 存储调用
-async function checkLogin() {
+async function checkLogin () {
     let res = await storesUserInfo.getApiUserInfo()
     console.log('checkLogincheckLogin=====>', res)
 }
