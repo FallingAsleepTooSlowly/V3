@@ -7,9 +7,21 @@
                 <el-tabs v-model="activeName" @tab-click="handleClick">
                     <el-tab-pane class="login-main" label="用户名登陆" name="nameLogin">
                         <!-- <div class="login-main"></div> -->
-                        <el-input class="login-user-name input-box up-animation"></el-input>
-                        <el-input class="login-pass-word input-box up-animation"></el-input>
-                        <el-input class="login-code input-box up-animation"></el-input>
+                        <el-input
+                            class="login-user-name input-box up-animation"
+                            placeholder="请输入用户名"
+                            :prefix-icon="User"
+                        ></el-input>
+                        <el-input
+                            class="login-pass-word input-box up-animation"
+                            placeholder="请输入密码"
+                            :prefix-icon="Lock"
+                        ></el-input>
+                        <el-input
+                            class="login-code input-box up-animation"
+                            placeholder="请输入验证码"
+                            :prefix-icon="Stopwatch"
+                        ></el-input>
                         <div class="login-btn-box">
                             <el-button type="primary" class="login-confirm up-animation" @click="login">确定</el-button>
                         </div>
@@ -37,6 +49,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { Session } from '@/utils/storage';
 import { useUserInfo } from '@/stores/userInfo';
 import { initFrontControlRoutes } from '@/router/front'
+import { User, Lock, Stopwatch } from '@element-plus/icons-vue'
 
 // -------------- 定义变量
 const route = useRoute()
