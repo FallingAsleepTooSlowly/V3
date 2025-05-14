@@ -8,22 +8,29 @@
                     <el-tab-pane class="login-main" label="用户名登陆" name="nameLogin">
                         <!-- <div class="login-main"></div> -->
                         <el-input
+                            id="login-user-name"
                             class="login-user-name input-box up-animation"
+                            v-model="userName"
                             placeholder="请输入用户名"
                             :prefix-icon="User"
                         ></el-input>
                         <el-input
+                            id="login-pass-word"
                             class="login-pass-word input-box up-animation"
+                            v-model="password"
                             placeholder="请输入密码"
                             :prefix-icon="Lock"
+                            show-password
                         ></el-input>
                         <el-input
-                            class="login-code input-box up-animation"
+                            id="login-code"
+                            class="login-code input-box up-animation verification-code-box"
+                            v-model="verificationCode"
                             placeholder="请输入验证码"
                             :prefix-icon="Stopwatch"
                         >
                             <template #append>
-                                <span v-html="svgHtml" @click="getSvg"></span>
+                                <span v-html="svgHtml" class="verification-code" @click="getSvg"></span>
                             </template>
                         </el-input>
                         <div class="login-btn-box">
@@ -61,9 +68,15 @@ const router = useRouter()
 const storesUserInfo = useUserInfo()
 
 // tab 名
-const activeName = ref("nameLogin")
-// 验证码
-const svgHtml = ref(null)
+let activeName = ref("nameLogin")
+// 用户名
+let userName = ref(null) as any
+// 密码
+let password = ref(null) as any
+// 输入的验证码
+let verificationCode = ref(null) as any
+// 验证码显示
+let svgHtml = ref(null)
 
 // -------------- 生命周期
 
@@ -83,9 +96,12 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 
 // 登陆接口
 function login() {
+    if (!userName.value) userName.value = "ganhuan"
+    if (!password.value) password.value = "123456"
     userApi.login({
-        name: "ganhuan",
-        password: "123456"
+        name: userName.value,
+        password: password.value,
+        captcha: verificationCode.value + Date.now()
     }).then(res => {
         console.log('userPost=====>', res)
         if (res.data) {
@@ -221,6 +237,15 @@ function changeTheme() {
                         height: 40px;
                         animation-delay: 150ms;
                         letter-spacing: 6px;
+                    }
+                }
+
+                .verification-code-box {
+                    :deep(.el-input-group__append) {
+                        padding: 0;
+                    }
+                    .verification-code {
+                        height: 40px;
                     }
                 }
             }
