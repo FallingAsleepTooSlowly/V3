@@ -16,6 +16,13 @@ const userApi = {
             method: 'get'
         })
     },
+    // 获取验证码
+    getSvg: () => {
+        return request({
+            url: '/user/getSvg',
+            method: 'get'
+        })
+    },
     userPost: (data: object) => {
         return request({
             url: '/user/post',

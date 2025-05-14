@@ -21,7 +21,11 @@
                             class="login-code input-box up-animation"
                             placeholder="请输入验证码"
                             :prefix-icon="Stopwatch"
-                        ></el-input>
+                        >
+                            <template #append>
+                                <span v-html="svgHtml" @click="getSvg"></span>
+                            </template>
+                        </el-input>
                         <div class="login-btn-box">
                             <el-button type="primary" class="login-confirm up-animation" @click="login">确定</el-button>
                         </div>
@@ -34,7 +38,7 @@
         </div>
     </div>
     <div>
-        <el-button type="success" @click="checkLogin">校验登陆</el-button>
+        <el-button type="success" @click="getSvg">校验登陆</el-button>
     </div>
 </div>
 </template>
@@ -56,11 +60,20 @@ const route = useRoute()
 const router = useRouter()
 const storesUserInfo = useUserInfo()
 
+// tab 名
+const activeName = ref("nameLogin")
+// 验证码
+const svgHtml = ref(null)
+
+// -------------- 生命周期
+
+onMounted(() => {
+    getSvg()
+})
+
 // -------------- 定义函数
 // 变更主题的方法
 const { getDarkColor, getLightColor } = useChangeColor()
-
-const activeName = ref("nameLogin")
 
 const handleClick = (tab: TabsPaneContext, event: Event) => {
     console.log("tab===>", JSON.parse(JSON.stringify(tab)))
@@ -110,6 +123,14 @@ async function afterLogin () {
             })
         }
     }
+
+}
+// 获取验证码
+function getSvg () {
+    userApi.getSvg().then(res => {
+        console.log('getSvggetSvg====>', res)
+        svgHtml.value = res.data
+    })
 }
 
 // 校验 login 存储调用
