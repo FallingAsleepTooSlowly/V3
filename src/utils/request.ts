@@ -23,6 +23,8 @@ const axiosInstance: AxiosInstance = axios.create({
     headers: { 'Content-Type': 'application/json' },
     // 请求超时的毫秒数，如果请求时间超过这个值，则请求会被中断
 	timeout: 50000,
+    // 跨域请求是否提供凭据信息(cookie、HTTP认证及客户端SSL证明等)，即请求为跨域类型时是否在请求中协带cookie
+    withCredentials: true,
     // paramsSerializer 是可选方法，主要用于序列化 params
     // paramsSerializer: {
 	// 	serialize(params) {

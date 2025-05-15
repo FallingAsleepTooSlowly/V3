@@ -101,7 +101,8 @@ function login() {
     userApi.login({
         name: userName.value,
         password: password.value,
-        captcha: verificationCode.value + Date.now()
+        // captcha: verificationCode.value + Date.now()
+        captcha: verificationCode.value
     }).then(res => {
         console.log('userPost=====>', res)
         if (res.data) {
@@ -144,6 +145,7 @@ async function afterLogin () {
 // 获取验证码
 function getSvg () {
     userApi.getSvg().then(res => {
+        // sessionStorage.setItem('authorities', JSON.stringify(permissions || '[]'))
         console.log('getSvggetSvg====>', res)
         svgHtml.value = res.data
     })
