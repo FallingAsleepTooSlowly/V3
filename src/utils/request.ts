@@ -81,7 +81,9 @@ axiosInstance.interceptors.response.use(
 				ElMessageBox.alert('你已被登出，请重新登录', '提示', {})
 					.then(() => {})
 					.catch(() => {});
-			}
+            } else {
+                ElMessage.error(res.message)
+            }
 			// return Promise.reject(axiosInstance.interceptors.response);
 			return Promise.reject(res);
 		} else {

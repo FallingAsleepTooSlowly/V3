@@ -94,8 +94,12 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
     console.log("activeName===>", activeName.value)
 }
 
+function verifyInput() {
+
+}
+
 // 登陆接口
-function login() {
+function login () {
     if (!userName.value) userName.value = "ganhuan"
     if (!password.value) password.value = "123456"
     userApi.login({
@@ -107,7 +111,7 @@ function login() {
         console.log('userPost=====>', res)
         if (res.data) {
             // 前端自己生成 token 并保存到本地
-            // Session.set('token', Math.random().toString(36).substring(0));
+            // Session.set('token', Math.random().toString(36).substring(0))
             // 保存后端返回的 token 到本地
             Session.set('token', res.token)
             // 保存用户信息到本地
