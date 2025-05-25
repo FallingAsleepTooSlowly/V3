@@ -2,9 +2,12 @@
     <el-container class="layout-container">
         <LayoutAside />
         <el-container class="h100" style="display: flex; flex-direction: column;">
-            <el-button type="success" @click="checkToken">校验token</el-button>
-            <el-button type="danger" @click="logOut">退出登陆</el-button>
-            <LayoutMain />
+            <el-scrollbar>
+                <el-button type="success" @click="checkToken">校验token</el-button>
+                <el-button type="danger" @click="logOut">退出登陆</el-button>
+                <LayoutHeader />
+                <LayoutMain />
+            </el-scrollbar>
         </el-container>
     </el-container>
 </template>
@@ -17,6 +20,7 @@ import { Session } from '@/utils/storage';
 // ---------------- 引入组件
 const LayoutAside = defineAsyncComponent(() => import('@/layout/components/aside.vue'))
 const LayoutMain = defineAsyncComponent(() => import('@/layout/components/main.vue'))
+const LayoutHeader = defineAsyncComponent(() => import('@/layout/components/header.vue'))
 
 // ---------------- 定义变量
 const route = useRoute()

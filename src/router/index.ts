@@ -69,7 +69,6 @@ router.beforeEach(async (to, from, next) => {
             let res = await checkToken()
             if (res) {
                 const { routesList } = storeToRefs(useRoutesList())
-                console.log('routesList----->', routesList.value.length)
                 if (routesList.value.length === 0) {
                     await initFrontControlRoutes()
                     next({ path: to.path, query: to.query })
@@ -92,11 +91,7 @@ async function checkToken() {
         const res = await userApi.checkToken()
         return res
     } catch (error: any) {
-        // 若 token 校验失败，则弹提示并删除 token
-        ElMessage({
-            message: error.message,
-            type: 'error',
-        })
+        // 若 token 校验失败，则删除 token
         Session.remove('token')
         return false
     }

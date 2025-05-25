@@ -21,6 +21,7 @@ body,
 
 html {
 	--theme-color: #409eff;
+    --icon-color: #333;
 }
 
 // :root 优先级比 html 高，但在里面定义变量的话可能因为解析顺序导致变量不生效

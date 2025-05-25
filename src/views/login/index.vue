@@ -28,6 +28,7 @@
                             v-model="verificationCode"
                             placeholder="请输入验证码"
                             :prefix-icon="Stopwatch"
+                            @keyup.enter="login"
                         >
                             <template #append>
                                 <span v-html="svgHtml" class="verification-code" @click="getSvg"></span>
@@ -120,7 +121,9 @@ function login () {
             afterLogin()
         }
     }).catch(e => {
-        console.log('eeeee===>', e)
+        if (e.message === '验证码已过期') {
+            getSvg()
+        }
     })
 }
 
