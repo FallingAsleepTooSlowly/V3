@@ -1,6 +1,6 @@
 <template>
-    <div class="h100">
-        <el-aside class="h100" style="background: purple;">
+    <div class="layout-aside h100">
+        <el-aside class="h100 layout-aside-220" style="background: purple;">
             <el-scrollbar>
                 <el-menu
                     default-active="1"
