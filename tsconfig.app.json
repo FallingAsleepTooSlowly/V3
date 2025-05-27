@@ -22,6 +22,9 @@
         "src/**/*.tsx",
         "src/**/*.vue",
         // 新建文件 Element-puls.d.ts 并在此导入，解决 Element Plus 按需引入后报 Cannot find name 'ElMessage' 等的问题
-        "Element-puls.d.ts"
+        // 文件在 src 目录就不需要在此配置，反之则需要
+        "Element-puls.d.ts",
+        "auto-imports.d.ts",
+        // "components.d.ts"
     ]
 }

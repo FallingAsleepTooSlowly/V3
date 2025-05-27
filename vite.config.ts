@@ -19,7 +19,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 // 安装 Element Plus 图标：npm install @element-plus/icons-vue
 // 安装 Element Plus 图标自动导入的插件：npm i -D unplugin-icons（图标自动引入时需要配合 unplugin-vue-components 组件使用）
 // 安装 iconify 图标库中指定的 Element Plus 图标，对应的图标集名叫 ep，即：npm i -D @iconify-json/ep
-// 使用方式如下，其中图标必须使用为 <i-ep-xxx /> 或 <IEpSearch />
+// 使用方式如下，其中图标默认必须使用为 <i-ep-xxx /> 或 <IEpSearch />
 /*
     <el-icon :size="size" :color="color">
       <i-ep-Search />
@@ -112,8 +112,14 @@ export default defineConfig(() => {
                     // 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox... (带样式)
                     ElementPlusResolver(),
                     // 解析器配置自动引入的 Icon 组件的统一前缀，默认为 i，设置 false 为不需要前缀
-                    // {prefix}-{collection}-{icon} 使用组件解析器时，必须遵循名称转换才能正确推断图标
-                    IconsResolver({ prefix: 'Icon' }),
+                    /*
+                        {prefix}-{collection}-{icon} 使用组件解析器时，必须遵循名称转换才能正确推断图标
+                        即可以使用 <IconEpSearch /> 或在代码里使用 IconEpSearch
+                    */
+                    IconsResolver({
+                        // prefix: 'Icon',
+                        enabledCollections: ['ep']
+                    }),
                 ],
                 // 自动导入 vue3 的 hooks，导入后就不用再 import { ref, computed } from 'vue'
                 imports: ['vue', 'vue-router', 'vue-i18n', '@vueuse/head', '@vueuse/core'],
@@ -127,8 +133,14 @@ export default defineConfig(() => {
                     // 自动导入 Element Plus 组件
                     ElementPlusResolver(),
                     // 解析器配置 Iconify 使用的集合，如这里的 ep 指定的就是 Iconify 里 element-plus 的图标集合
-                    // {prefix}-{collection}-{icon} 使用组件解析器时，必须遵循名称转换才能正确推断图标
-                    IconsResolver({enabledCollections: ['ep']})
+                    /*
+                        {prefix}-{collection}-{icon} 使用组件解析器时，必须遵循名称转换才能正确推断图标
+                        即可以使用 <IconEpSearch /> 或在代码里使用 IconEpSearch
+                    */
+                    IconsResolver({
+                        // prefix: 'Icon',
+                        enabledCollections: ['ep']
+                    })
                 ],
                 // 指定组件位置，默认是src/components，不修改的话 src/components 的组件都不需要手动导入了
                 dirs: ['src/components/base'],

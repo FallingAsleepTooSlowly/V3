@@ -4,8 +4,10 @@
             <!-- <svg-icon icon-name="vue" />
             <i-ep-Fold /> -->
             <template #icon>
-                <component is="i-ep-Fold" />
-                <!-- <i-ep-Fold /> -->
+                <!-- <el-icon>
+                    <component :is="test"></component>
+                </el-icon> -->
+                <IEpFold />
             </template>
             <template #title>{{ route?.meta?.title }}</template>
             <template #extra>
@@ -24,6 +26,8 @@ import { Session } from '@/utils/storage';
 // --------------- 变量
 const route = useRoute()
 const router = useRouter()
+const test = IEpFold
+// let obj = reactive([{ icon: IEpPlus }, { icon: IEpMinus }, { icon: IEpHouse }, { icon: IEpDelete }])
 
 // --------------- 生命周期
 onMounted(() => {
