@@ -15,7 +15,9 @@
         "baseUrl": ".",      // 解析非相对模块的基地址，默认是当前目录
         "paths": {           // 模块名到基于 baseUrl的路径映射的列表
             "@/*": ["./src/*"]
-        }
+        },
+        // 添加 unplugin-icons 的类型，添加后就可以手动引入 iconify 的图标，如 import IEpUser from "~icons/ep/user";
+        "types": ["unplugin-icons/types/vue"]
     },
     "include": [
         "src/**/*.ts",
