@@ -10,6 +10,8 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
         "noUncheckedSideEffectImports": true,
+        // 避免尝试使用字符串类型的表达式来索引一个对象时报错 “Element implicitly has an ‘any’ type because expression of type ‘string’ can’t be used to index”
+        "noImplicitAny": false,
 
         // 配置 @ 路径
         "baseUrl": ".",      // 解析非相对模块的基地址，默认是当前目录
