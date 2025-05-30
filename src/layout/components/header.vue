@@ -4,9 +4,6 @@
             <!-- <svg-icon icon-name="vue" />
             <i-ep-Fold /> -->
             <template #icon>
-                <!-- <el-icon>
-                    <component :is="test"></component>
-                </el-icon> -->
                 <IEpFold />
             </template>
             <template #title>{{ route?.meta?.title }}</template>

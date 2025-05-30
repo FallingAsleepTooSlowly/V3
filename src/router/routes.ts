@@ -23,7 +23,8 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                 component: () => import("@/views/home/index.vue"),
                 meta: {
                     title: '首页',
-                    roles: ['admin', 'common']
+                    roles: ['admin', 'common'],
+                    icon: 'IEpHouse'
                 }
             },
             {
@@ -32,7 +33,8 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                 component: () => import("@/views/user/index.vue"),
                 meta: {
                     title: '用户信息',
-                    roles: ['admin', 'common']
+                    roles: ['admin', 'common'],
+                    icon: 'IEpUser'
                 }
             },
             {
@@ -41,7 +43,8 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                 component: () => import("@/views/account/index.vue"),
                 meta: {
                     title: '门店账号管理',
-                    roles: ['admin']
+                    roles: ['admin'],
+                    icon: 'IEpDocument'
                 }
             },
             {
@@ -50,7 +53,8 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                 component: () => import("@/views/developerPage/index.vue"),
                 meta: {
                     title: '开发者页面',
-                    roles: ['dev']
+                    roles: ['dev'],
+                    icon: 'IEpKey'
                 }
             }
         ]

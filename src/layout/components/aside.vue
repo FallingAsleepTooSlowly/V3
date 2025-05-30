@@ -6,17 +6,18 @@
                     default-active="1"
                     router
                 >
-                    <template v-for="val in state.menuList">
+                    <template v-for="item in state.menuList">
                         <!-- 有子项 -->
-                        <el-sub-menu v-if="val.children && val.children.length" :index="val.path" :key="val.path">
+                        <el-sub-menu v-if="item.children && item.children.length" :index="item.path" :key="item.path">
                             <i-ep-Document />
-                            <span>{{ val?.meta?.title }}</span>
+                            <span>{{ item?.meta?.title }}</span>
                         </el-sub-menu>
                         <!-- 无子项 -->
                         <template v-else>
-                            <el-menu-item :index="val.path" :key="val.path">
-                                <i-ep-Document />
-                                <span @click="clickMenuLink(val)">{{ val?.meta?.title }}</span>
+                            <el-menu-item :index="item.path" :key="item.path">
+                                <!-- <i-ep-Document /> -->
+                                <component :is="item.meta.icon" />
+                                <span @click="clickMenuLink(item)">{{ item?.meta?.title }}</span>
                             </el-menu-item>
                         </template>
                     </template>
@@ -28,12 +29,16 @@
 
 <script setup lang="ts">
 import { useRoutesList } from '@/stores/routesList'
+import { useIconList } from '@/stores/iconList'
 import { storeToRefs } from 'pinia'
-import EventBus from '@/utils/mitt'
+// import EventBus from '@/utils/mitt'
 
 // -------------- 定义变量
 // 全局路由数据
 const { routesList } = storeToRefs(useRoutesList())
+// 全局图标获取
+const getIcon = useIconList().getIcon
+// 筛选出的左侧列表展示数据
 const state = reactive<AsideState>({
     menuList: [],
     clientWidth: 0
@@ -44,6 +49,11 @@ onMounted(() => {
     console.log('routesList.value====>', routesList.value)
     state.menuList = filterRoutesFun(routesList.value)
     console.log('state.menuList=====>', state.menuList)
+    state.menuList.forEach(item => {
+        if (item?.meta?.icon) {
+            item.meta.icon = getIcon(item.meta.icon)
+        }
+    });
 })
 
 // -------------- 定义函数
