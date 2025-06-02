@@ -1,9 +1,12 @@
 <template>
     <div class="layout-aside h100">
-        <el-aside class="h100 layout-aside-220" style="background: purple;">
+        <!-- width="collapse" 设置宽度跟随 menu -->
+        <el-aside class="h100" width="collapse" style="background: purple;">
             <el-scrollbar>
                 <el-menu
+                    class="vertical-menu"
                     default-active="1"
+                    :collapse="themeConfig.isCollapse"
                     router
                 >
                     <template v-for="item in state.menuList">
@@ -30,6 +33,7 @@
 <script setup lang="ts">
 import { useRoutesList } from '@/stores/routesList'
 import { useIconList } from '@/stores/iconList'
+import { useThemeConfig } from '@/stores/themeConfig'
 import { storeToRefs } from 'pinia'
 // import EventBus from '@/utils/mitt'
 
@@ -38,6 +42,8 @@ import { storeToRefs } from 'pinia'
 const { routesList } = storeToRefs(useRoutesList())
 // 全局图标获取
 const getIcon = useIconList().getIcon
+// 全局布局配置
+const { themeConfig } = storeToRefs(useThemeConfig())
 // 筛选出的左侧列表展示数据
 const state = reactive<AsideState>({
     menuList: [],
@@ -76,3 +82,12 @@ function clickMenuLink(val: any) {
     console.log('val====>', val)
 }
 </script>
+
+<style scoped lang="scss">
+.layout-aside {
+    // 设置展开时的样式
+    .vertical-menu:not(.el-menu--collapse) {
+        width: 220px;
+    }
+}
+</style>

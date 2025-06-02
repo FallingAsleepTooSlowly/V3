@@ -45,9 +45,6 @@
             </div>
         </div>
     </div>
-    <div>
-        <el-button type="success" @click="getSvg">校验登陆</el-button>
-    </div>
 </div>
 </template>
 
@@ -122,6 +119,7 @@ function login () {
         }
     }).catch(e => {
         if (e.message === '验证码已过期') {
+            verificationCode.value = null
             getSvg()
         }
     })
@@ -147,7 +145,6 @@ async function afterLogin () {
             })
         }
     }
-
 }
 // 获取验证码
 function getSvg () {
@@ -200,6 +197,7 @@ function changeTheme() {
         width: 500px;
         height: 500px;
         border-radius: 5px;
+        background-color: white;
 
         .login-top {
             height: 130px;

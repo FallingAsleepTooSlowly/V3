@@ -1,8 +1,8 @@
 <template>
     <el-container class="layout-container">
         <LayoutAside />
-        <el-container class="h100" style="display: flex; flex-direction: column;">
-            <el-scrollbar>
+        <el-container class="h100">
+            <el-scrollbar class="w100">
                 <LayoutHeader />
                 <LayoutMain />
             </el-scrollbar>
@@ -29,3 +29,7 @@ onMounted(() => {
 // ---------------- 函数
 
 </script>
+
+<style scoped lang="scss">
+
+</style>

@@ -54,7 +54,11 @@ export const Session = {
 		if (key === 'token') return Cookies.get(key);
 		// let json = <string>window.sessionStorage.getItem(Local.setKey(key));
 		let json = <string>window.sessionStorage.getItem(key);
-		return JSON.parse(json);
+        if (json && json != "undefined") {
+			return JSON.parse(json);
+		} else {
+			return null
+		}
 	},
 	// 移除临时缓存
 	remove(key: string) {

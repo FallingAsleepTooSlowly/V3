@@ -4,7 +4,8 @@
             <!-- <svg-icon icon-name="vue" />
             <i-ep-Fold /> -->
             <template #icon>
-                <IEpFold />
+                <IEpFold v-if="!themeConfig.isCollapse" @click="switchIsCollapse" />
+                <IEpExpand v-else @click="switchIsCollapse" />
             </template>
             <template #title>{{ route?.meta?.title }}</template>
             <template #extra>
@@ -19,12 +20,15 @@
 import { useRoute, useRouter } from 'vue-router';
 import userApi from '@/api/user';
 import { Session } from '@/utils/storage';
+import { useThemeConfig } from '@/stores/themeConfig';
+import { storeToRefs } from 'pinia'
 
 // --------------- 变量
+// 路由
 const route = useRoute()
 const router = useRouter()
-// const test = IEpFold
-// let obj = reactive([{ icon: IEpPlus }, { icon: IEpMinus }, { icon: IEpHouse }, { icon: IEpDelete }])
+// 全局布局配置
+const { themeConfig } = storeToRefs(useThemeConfig())
 
 // --------------- 生命周期
 onMounted(() => {
@@ -33,6 +37,10 @@ onMounted(() => {
 })
 
 // ---------------- 函数
+// 展开收缩侧边栏
+function switchIsCollapse() {
+    themeConfig.value.isCollapse = !themeConfig.value.isCollapse
+}
 // 校验 token
 function checkToken () {
     userApi.checkToken().then(() => {

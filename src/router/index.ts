@@ -47,13 +47,10 @@ router.beforeEach(async (to, from, next) => {
     // console.log("to=====>", to)
     NProgress.configure({ showSpinner: false })
     if (to.meta.title) NProgress.start()
-    // // 获取到前端自己保存的 token
-    // const token = Session.get('token')
-    // // 清除前端的所有 token
-    // Session.clear()
     // 获取到后端返回并存储好的 token
     const token = Session.get('token')
-    if (to.path === '/login' && !token) {
+    const userInfo = Session.get('userInfo')
+    if (to.path === '/login') {
         next()
 		NProgress.done()
     } else {
@@ -67,7 +64,7 @@ router.beforeEach(async (to, from, next) => {
         } else {
             // 校验 token
             let res = await checkToken()
-            if (res) {
+            if (res || !userInfo) {
                 const { routesList } = storeToRefs(useRoutesList())
                 if (routesList.value.length === 0) {
                     await initFrontControlRoutes()
