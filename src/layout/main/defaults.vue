@@ -1,11 +1,11 @@
 <template>
     <el-container class="layout-container">
         <LayoutAside />
-        <el-container class="h100">
-            <el-scrollbar class="w100">
+        <el-container class="h100" direction="vertical">
+            <!-- <el-scrollbar class="w100"> -->
                 <LayoutHeader />
                 <LayoutMain />
-            </el-scrollbar>
+            <!-- </el-scrollbar> -->
         </el-container>
     </el-container>
 </template>
