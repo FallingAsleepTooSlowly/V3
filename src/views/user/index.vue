@@ -1,27 +1,18 @@
 <template>
     <div class="user">
-        <el-upload class="portrait-upload">
+        <!--
+            action 为请求的 url
+            show-file-list 是否显示已上传的文件
+        -->
+        <el-upload
+            class="portrait-upload"
+            action="http://localhost:9000/user/uploadPortrait"
+            :show-file-list="false"
+            method="post"
+        >
             <img v-if="portrait" :src="portrait">
             <IEpPlus v-else class="icon"></IEpPlus>
         </el-upload>
-        <div>
-            <el-upload class="portrait-upload">
-                <img v-if="portrait" :src="portrait">
-                <IEpPlus v-else class="icon"></IEpPlus>
-            </el-upload>
-        </div>
-        <div>
-            <el-upload class="portrait-upload">
-                <img v-if="portrait" :src="portrait">
-                <IEpPlus v-else class="icon"></IEpPlus>
-            </el-upload>
-        </div>
-        <div>
-            <el-upload class="portrait-upload">
-                <img v-if="portrait" :src="portrait">
-                <IEpPlus v-else class="icon"></IEpPlus>
-            </el-upload>
-        </div>
     </div>
 </template>
 
@@ -36,9 +27,6 @@ const portrait = ref('')
 
 <style scoped lang="scss">
 .user {
-    background-color: white;
-    margin: 20px;
-    padding: 20px;
     .portrait-upload {
         border: 1px solid #333;
         display: inline-flex;
@@ -49,7 +37,7 @@ const portrait = ref('')
         }
         .icon {
             width: 150px;
-            height: 650px;
+            height: 150px;
         }
     }
 }

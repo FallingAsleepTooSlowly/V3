@@ -1,7 +1,7 @@
 <template>
     <el-main class="layout-main">
         <el-scrollbar >
-            <router-view>
+            <router-view class="layout-view">
 
             </router-view>
         </el-scrollbar>
@@ -17,6 +17,12 @@
     :deep(.el-scrollbar) {
         background-color: #f8f8f8;
         // padding: 0 20px;
+    }
+
+    .layout-view {
+        background-color: white;
+        margin: 20px;
+        padding: 20px;
     }
 }
 </style>
