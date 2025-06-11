@@ -23,6 +23,13 @@ const userApi = {
             method: 'get'
         })
     },
+    getNewUserInfo: (data: object) => {
+        return request({
+            url: '/user/getNewUserInfo',
+            method: 'post',
+            data
+        })
+    },
     userPost: (data: object) => {
         return request({
             url: '/user/post',

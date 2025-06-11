@@ -17,11 +17,23 @@
 </template>
 
 <script setup>
+import { useUserInfo } from '@/stores/userInfo';
+import { storeToRefs } from 'pinia';
 // --------------- 变量
 // 头像图片
 const portrait = ref('')
+// 全局保存的用户信息
+const { userInfo } = storeToRefs(useUserInfo())
+
+// --------------- 生命周期
+onMounted(() => {
+    console.log('userInfo===>', userInfo.value.name)
+})
 
 // ---------------- 函数
+function getNewUserInfo () {
+
+}
 
 </script>
 
