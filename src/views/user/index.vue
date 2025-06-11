@@ -19,6 +19,7 @@
 <script setup>
 import { useUserInfo } from '@/stores/userInfo';
 import { storeToRefs } from 'pinia';
+import userApi from '@/api/user';
 // --------------- 变量
 // 头像图片
 const portrait = ref('')
@@ -28,11 +29,20 @@ const { userInfo } = storeToRefs(useUserInfo())
 // --------------- 生命周期
 onMounted(() => {
     console.log('userInfo===>', userInfo.value.name)
+    getNewUserInfo()
 })
 
 // ---------------- 函数
+// 获取最新用户信息
 function getNewUserInfo () {
+    userApi.getNewUserInfo({
+        name: userInfo.value.name
+    }).then(res => {
+        console.log("getNewUserInfo====>", res)
+        if (res.data) {
 
+        }
+    })
 }
 
 </script>
