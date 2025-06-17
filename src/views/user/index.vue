@@ -9,6 +9,7 @@
             action="http://localhost:9000/user/uploadPortrait"
             :show-file-list="false"
             method="post"
+            :dat="{ name: userInfo.value.name }"
         >
             <img v-if="portrait" :src="portrait">
             <IEpPlus v-else class="icon"></IEpPlus>
@@ -20,6 +21,7 @@
 import { useUserInfo } from '@/stores/userInfo';
 import { storeToRefs } from 'pinia';
 import userApi from '@/api/user';
+import { Session } from "@/utils/storage";
 // --------------- 变量
 // 头像图片
 const portrait = ref('')
@@ -40,7 +42,10 @@ function getNewUserInfo () {
     }).then(res => {
         console.log("getNewUserInfo====>", res)
         if (res.data) {
-
+            // 保存用户信息到本地
+            Session.set('userInfo', res.data)
+            // 保存信息到全局
+            useUserInfo().setUserInfo()
         }
     })
 }
