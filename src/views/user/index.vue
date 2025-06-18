@@ -1,15 +1,18 @@
 <template>
     <div class="user">
         <!--
-            action 为请求的 url
-            show-file-list 是否显示已上传的文件
+            action  为请求的 url
+            show-file-list  是否显示已上传的文件
+            headers  请求头
+            data  上传时附带的额外参数
         -->
         <el-upload
             class="portrait-upload"
             action="http://localhost:9000/user/uploadPortrait"
             :show-file-list="false"
             method="post"
-            :dat="{ name: userInfo.value.name }"
+            :headers="{ token: Session.get('token') }"
+            :data="{ name: userInfo.name }"
         >
             <img v-if="portrait" :src="portrait">
             <IEpPlus v-else class="icon"></IEpPlus>
@@ -31,21 +34,21 @@ const { userInfo } = storeToRefs(useUserInfo())
 // --------------- 生命周期
 onMounted(() => {
     console.log('userInfo===>', userInfo.value.name)
-    getNewUserInfo()
+    getUserInfoByUserName()
 })
 
 // ---------------- 函数
 // 获取最新用户信息
-function getNewUserInfo () {
-    userApi.getNewUserInfo({
+function getUserInfoByUserName () {
+    userApi.getUserInfoByUserName({
         name: userInfo.value.name
     }).then(res => {
-        console.log("getNewUserInfo====>", res)
+        console.log("getUserInfoByUserName====>", res)
         if (res.data) {
-            // 保存用户信息到本地
-            Session.set('userInfo', res.data)
-            // 保存信息到全局
-            useUserInfo().setUserInfo()
+            // // 保存用户信息到本地
+            // Session.set('userInfo', res.data)
+            // // 保存信息到全局
+            // useUserInfo().setUserInfo()
         }
     })
 }

@@ -24,9 +24,9 @@ const userApi = {
         })
     },
     // 获取最新用户信息
-    getNewUserInfo: (data: object) => {
+    getUserInfoByUserName: (data: object) => {
         return request({
-            url: '/user/getNewUserInfo',
+            url: '/user/getUserInfoByUserName',
             method: 'post',
             data
         })
