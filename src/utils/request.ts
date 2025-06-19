@@ -18,7 +18,8 @@ const axiosInstance: AxiosInstance = axios.create({
     // 创建请求时使用的方法，默认是 'get'，
     // method: 'post',
     // baseURL 将自动加在 url 前面，除非 url 是一个绝对 URL
-    baseURL: 'http://localhost:9000',
+    // baseURL: 'http://localhost:9000',
+    baseURL: '/api',
     // 自定义请求头
     headers: { 'Content-Type': 'application/json' },
     // 请求超时的毫秒数，如果请求时间超过这个值，则请求会被中断

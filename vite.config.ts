@@ -56,23 +56,24 @@ export default defineConfig(() => {
                 localhost:8080/bcma/api/test -> http://aaa.net/bcma/api/test
                 */
                 // 选项写法
-                // '/api': {
-                //   target: 'http://xxxxxx.com',
-                //   // 是否要代理 websockets
-                //   ws: true,
-                //   // 是否是 https 接口
-                //   secure: false,
-                //   // 是否允许修改请求的源地址，即是否跨域
-                //   changeOrigin: true,
-                //   /*
-                //     当你调接口后端的命名没有统一给接口前加 /api 这类的标识，那么你可以自己加，也就是你可以在本地调 localhost:8080/api/test，如axios.get('/api/test')，
-                //     而你要的目标接口是 http://aaa.net/test，你就可以用 rewrite，遇到 /api 就去找代理 http://aaa.net 并且把 /api 重写为 /。
-                //     所以转发效果就是：
-                //     localhost:8080/api/test -> http://aaa.net/test
-                //   */
-                //   // 对请求的路径进行重写，将 /api 替换为字符串
-                //   rewrite: (path) => path.replace(/^\/api/, '')
-                // }
+                '/api': {
+                    // target: 'http://192.168.132.242:9000',
+                    target: 'http://localhost:9000',
+                    // 是否要代理 websockets
+                    //   ws: true,
+                    // 是否是 https 接口
+                    secure: false,
+                    // 是否允许修改请求的源地址，即是否跨域
+                    changeOrigin: true,
+                    /*
+                        当你调接口后端的命名没有统一给接口前加 /api 这类的标识，那么你可以自己加，也就是你可以在本地调 localhost:8080/api/test，如axios.get('/api/test')，
+                        而你要的目标接口是 http://aaa.net/test，你就可以用 rewrite，遇到 /api 就去找代理 http://aaa.net 并且把 /api 重写为 /。
+                        所以转发效果就是：
+                        localhost:8080/api/test -> http://aaa.net/test
+                    */
+                    // 对请求的路径进行重写，将 /api 替换为字符串
+                    rewrite: (path) => path.replace(/^\/api/, '')
+                }
             },
             // 指定服务器响应的 header
             headers: {},

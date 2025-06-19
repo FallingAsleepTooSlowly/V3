@@ -17,6 +17,7 @@
             <img v-if="portrait" :src="portrait">
             <IEpPlus v-else class="icon"></IEpPlus>
         </el-upload>
+        <img src="http://192.168.132.242:9000/static/portrait/1111.jpeg">
     </div>
 </template>
 
