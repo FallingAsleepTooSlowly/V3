@@ -8,16 +8,16 @@
         -->
         <el-upload
             class="portrait-upload"
-            action="http://localhost:9000/user/uploadPortrait"
+            action="api/user/uploadPortrait"
             :show-file-list="false"
             method="post"
             :headers="{ token: Session.get('token') }"
-            :data="{ name: userInfo.name }"
+            :data="{ name: userInfo.name, type: 'portrait' }"
         >
             <img v-if="portrait" :src="portrait">
             <IEpPlus v-else class="icon"></IEpPlus>
         </el-upload>
-        <img src="http://192.168.132.242:9000/static/portrait/1111.jpeg">
+        <!-- <img src="http://192.168.132.242:9000/static/portrait/1111.jpeg"> -->
     </div>
 </template>
 
