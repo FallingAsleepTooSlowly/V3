@@ -64,7 +64,7 @@ router.beforeEach(async (to, from, next) => {
         } else {
             // 校验 token
             let res = await checkToken()
-            if (res || !userInfo) {
+            if (res && userInfo) {
                 const { routesList } = storeToRefs(useRoutesList())
                 if (routesList.value.length === 0) {
                     await initFrontControlRoutes()
