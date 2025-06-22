@@ -12,7 +12,7 @@
             :show-file-list="false"
             method="post"
             :headers="{ token: Session.get('token') }"
-            :data="{ name: userInfo.name, type: 'portrait' }"
+            :data="{ name: userInfo.name }"
         >
             <img v-if="portrait" :src="portrait">
             <IEpPlus v-else class="icon"></IEpPlus>
