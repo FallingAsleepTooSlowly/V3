@@ -14,8 +14,18 @@
             :headers="{ token: Session.get('token') }"
             :data="{ name: userInfo.name }"
         >
-            <img v-if="portrait" :src="portrait">
-            <IEpPlus v-else class="icon"></IEpPlus>
+            <!-- <img v-if="portrait" :src="portrait"> -->
+            <IEpPlus class="icon"></IEpPlus>
+        </el-upload>
+        <el-upload
+            class="portrait-upload"
+            action="api/upload/uploadFile"
+            :show-file-list="false"
+            method="post"
+            :headers="{ token: Session.get('token') }"
+            :data="{ id: userInfo.id }"
+        >
+            <IEpPlus class="icon"></IEpPlus>
         </el-upload>
         <!-- <img src="http://192.168.132.242:9000/static/portrait/1111.jpeg"> -->
     </div>
@@ -34,7 +44,7 @@ const { userInfo } = storeToRefs(useUserInfo())
 
 // --------------- 生命周期
 onMounted(() => {
-    console.log('userInfo===>', userInfo.value.name)
+    console.log('userInfo===>', userInfo.value)
     getUserInfoByUserName()
 })
 

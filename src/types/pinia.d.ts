@@ -4,6 +4,7 @@
 
 // 用户信息
 declare interface UserInfo<T = any> {
+    id: number | null,
     userName: string,
     roles: string[],
     portrait: string

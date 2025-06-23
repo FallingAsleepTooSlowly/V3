@@ -8,6 +8,7 @@ import { Session } from "@/utils/storage";
 export const useUserInfo = defineStore('userInfo', {
     state: (): UserInfosState => ({
         userInfo: {
+            id: null,
             // 用户名
             userName: '',
             // 角色
