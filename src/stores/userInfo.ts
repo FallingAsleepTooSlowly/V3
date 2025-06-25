@@ -10,7 +10,7 @@ export const useUserInfo = defineStore('userInfo', {
         userInfo: {
             id: null,
             // 用户名
-            userName: '',
+            name: '',
             // 角色
             roles: [] as Array<string>,
             // 头像图片

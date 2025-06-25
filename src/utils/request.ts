@@ -1,5 +1,6 @@
 import axios from 'axios'
 import type { AxiosInstance } from 'axios'
+// 不是vue文件所以要引入
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Session } from '@/utils/storage'
 

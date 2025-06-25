@@ -28,19 +28,52 @@
             <IEpPlus class="icon"></IEpPlus>
         </el-upload>
         <!-- <img src="http://192.168.132.242:9000/static/portrait/1111.jpeg"> -->
+
+        <div style="margin-top: 15px;">
+            <el-upload
+                v-model:file-list="fileList"
+                ref="uploadFileRef"
+                :auto-upload="false"
+            >
+                <template #trigger>
+                    <el-button type="primary">select file</el-button>
+                </template>
+
+                <el-button class="ml-3" type="success" @click="clickUpload(0)">
+                    upload to server
+                </el-button>
+
+                <template #tip>
+                    <div class="el-upload__tip">
+                        jpg/png files with a size less than 500kb
+                    </div>
+                </template>
+            </el-upload>
+        </div>
+
+        <div style="margin-top: 15px;">
+            <input type="file" id="file" name="file" accept="*" >
+            <input type="button" value="上传" @click="uploadTest(0)">
+        </div>
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useUserInfo } from '@/stores/userInfo';
 import { storeToRefs } from 'pinia';
 import userApi from '@/api/user';
+import uploadApi from '@/api/upload';
 import { Session } from "@/utils/storage";
+import type { UploadProps, UploadUserFile } from 'element-plus'
 // --------------- 变量
-// 头像图片
-const portrait = ref('')
 // 全局保存的用户信息
 const { userInfo } = storeToRefs(useUserInfo())
+// 头像图片
+const portrait = ref('')
+// 上传文件元素
+const uploadFileRef = ref(null)
+// 上传文件数据
+const fileList = ref<UploadUserFile[]>([])
 
 // --------------- 生命周期
 onMounted(() => {
@@ -62,6 +95,62 @@ function getUserInfoByUserName () {
             // useUserInfo().setUserInfo()
         }
     })
+}
+
+// 点击上传文件按钮
+function clickUpload (index) {
+    // ** proxy 代理的转换方式
+    // toRaw(fileList.value)
+    // JSON.parse(JSON.stringify(fileList.value))
+    // ** 上传文件元素的手动调用方式
+    // uploadFileRef.value.$el.querySelector('input').click()
+
+    console.log('fileListfileList=====>', fileList.value)
+    // 大文件的大小标准
+    const MAX_SIZE = 40 * 1024 * 1024
+    if (!fileList.value[0]) {
+        ElMessage.error('请选择文件')
+        return
+    }
+    // 获取文件对象
+    let file = fileList.value[index] as fileObject
+    // 判断文件大小是否需要分段上传
+    if (file.size < MAX_SIZE) {
+        uploadSingleFile(fileList.value[index])
+    }
+    // 获取文件名和扩展名
+    // let [fileName, fileExt] = file.name.split(".")
+}
+// 大文件上传分段文件
+/*
+    arguments:
+    index: 文件的下标
+    sectionIndex: 文件分段的下标
+*/
+function uploadSectionFile (index, sectionIndex: 0) {
+
+}
+// 小文件直接上传
+function uploadSingleFile (file) {
+    // 获取参数
+    const formData = new FormData()
+    formData.append('file', file)
+    // formData.append('id', userInfo.value.id as any)
+
+    // 调用接口
+    uploadApi.uploadSingleFile(formData).then(res => {
+        console.log('uploadSingleFile====>', res)
+    })
+}
+
+// ---------------- else
+
+// 不使用 element 组件上传文件
+function uploadTest (index) {
+    // var fileInput = document.getElementById("file").files
+    // 使用下面这种写法
+    var fileInput = document.getElementById("file")!["files"]
+    console.log('uploadTest===>', fileInput)
 }
 
 </script>
