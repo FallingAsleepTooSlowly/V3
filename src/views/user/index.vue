@@ -16,8 +16,8 @@
             :data="{ name: userInfo.name }"
             :on-success="uploadPortrait"
         >
-            <img v-if="userInfo.portrait" :src="constant.portraitAddress + userInfo.portrait">
-            <IEpPlus class="icon"></IEpPlus>
+            <img v-if="userInfo.portrait" class="u-portrait" :src="constant.portraitAddress + userInfo.portrait">
+            <IEpPlus v-else class="u-portrait"></IEpPlus>
         </el-upload>
         <el-upload
             class="portrait-upload"
@@ -27,7 +27,7 @@
             :headers="{ token: Session.get('token') }"
             :data="{ id: userInfo.id }"
         >
-            <IEpPlus class="icon"></IEpPlus>
+            <IEpPlus class="u-portrait"></IEpPlus>
         </el-upload>
         <!-- <img src="http://192.168.132.242:9000/static/portrait/1111.jpeg"> -->
 
@@ -86,6 +86,7 @@ onMounted(() => {
 function uploadPortrait (res) {
     console.log('uploadPortraituploadPortrait===>', res)
     if (res && res.code === 0) {
+        ElMessage.success('头像上传成功！')
         getUserInfoByUserName()
     } else {
         if (res.message) {
@@ -186,11 +187,7 @@ function uploadTest (index) {
         border: 1px solid #333;
         display: inline-flex;
 
-        img {
-            width: 150px;
-            height: 150px;
-        }
-        .icon {
+        .u-portrait {
             width: 150px;
             height: 150px;
         }
