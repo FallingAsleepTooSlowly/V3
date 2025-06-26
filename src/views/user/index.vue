@@ -5,6 +5,7 @@
             show-file-list  是否显示已上传的文件
             headers  请求头
             data  上传时附带的额外参数
+            on-success  上传成功的钩子
         -->
         <el-upload
             class="portrait-upload"
@@ -13,8 +14,9 @@
             method="post"
             :headers="{ token: Session.get('token') }"
             :data="{ name: userInfo.name }"
+            :on-success="uploadPortrait"
         >
-            <!-- <img v-if="portrait" :src="portrait"> -->
+            <img v-if="userInfo.portrait" :src="constant.portraitAddress + userInfo.portrait">
             <IEpPlus class="icon"></IEpPlus>
         </el-upload>
         <el-upload
@@ -64,35 +66,45 @@ import { storeToRefs } from 'pinia';
 import userApi from '@/api/user';
 import uploadApi from '@/api/upload';
 import { Session } from "@/utils/storage";
-import type { UploadProps, UploadUserFile } from 'element-plus'
+import constant from "@/common/constant"
 // --------------- 变量
 // 全局保存的用户信息
 const { userInfo } = storeToRefs(useUserInfo())
-// 头像图片
-const portrait = ref('')
 // 上传文件元素
 const uploadFileRef = ref(null)
 // 上传文件数据
-const fileList = ref<UploadUserFile[]>([])
+const fileList = ref([])
+// const fileList = ref([])
 
 // --------------- 生命周期
 onMounted(() => {
-    console.log('userInfo===>', userInfo.value)
     getUserInfoByUserName()
 })
 
 // ---------------- 函数
+// 上传文件回调
+function uploadPortrait (res) {
+    console.log('uploadPortraituploadPortrait===>', res)
+    if (res && res.code === 0) {
+        getUserInfoByUserName()
+    } else {
+        if (res.message) {
+            ElMessage.error(res.message)
+        } else {
+            ElMessage.error('头像上传失败')
+        }
+    }
+}
 // 获取最新用户信息
 function getUserInfoByUserName () {
     userApi.getUserInfoByUserName({
         name: userInfo.value.name
     }).then(res => {
-        console.log("getUserInfoByUserName====>", res)
         if (res.data) {
-            // // 保存用户信息到本地
-            // Session.set('userInfo', res.data)
-            // // 保存信息到全局
-            // useUserInfo().setUserInfo()
+            // 保存用户信息到本地
+            Session.set('userInfo', res.data)
+            // 保存信息到全局
+            useUserInfo().setUserInfo()
         }
     })
 }
@@ -105,7 +117,6 @@ function clickUpload (index) {
     // ** 上传文件元素的手动调用方式
     // uploadFileRef.value.$el.querySelector('input').click()
 
-    console.log('fileListfileList=====>', fileList.value)
     // 大文件的大小标准
     const MAX_SIZE = 40 * 1024 * 1024
     if (!fileList.value[0]) {
@@ -116,6 +127,7 @@ function clickUpload (index) {
     let file = fileList.value[index] as fileObject
     // 判断文件大小是否需要分段上传
     if (file.size < MAX_SIZE) {
+        // uploadSingleFile(fileList.value[index])
         uploadSingleFile(fileList.value[index])
     }
     // 获取文件名和扩展名
@@ -134,8 +146,13 @@ function uploadSectionFile (index, sectionIndex: 0) {
 function uploadSingleFile (file) {
     // 获取参数
     const formData = new FormData()
-    formData.append('file', file)
-    // formData.append('id', userInfo.value.id as any)
+    /*
+        node 的 multer 在识别到入参是文件类型时就会触发存储的方法，后面 append 的入参就识别不到，
+        所以如果存储方法会用到其它变量的话，尽量把文件放在最后 append
+    */
+    //
+    formData.append('id', userInfo.value.id as any)
+    formData.append('file', file.raw)
 
     // 调用接口
     uploadApi.uploadSingleFile(formData).then(res => {
@@ -150,7 +167,15 @@ function uploadTest (index) {
     // var fileInput = document.getElementById("file").files
     // 使用下面这种写法
     var fileInput = document.getElementById("file")!["files"]
-    console.log('uploadTest===>', fileInput)
+    // 获取参数
+    const formData = new FormData()
+    formData.append('file', fileInput[0])
+    formData.append('id', userInfo.value.id as any)
+
+    // 调用接口
+    uploadApi.uploadSingleFile(formData).then(res => {
+        console.log('uploadSingleFile====>', res)
+    })
 }
 
 </script>

@@ -1,6 +1,7 @@
 // 服务配置文件
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import constant from './src/common/constant'
 
 // 在Node.js中，resolve方法用于将路径或路径片段解析为绝对路径，它是 path 模块的一部分，常用于处理文件和目录路径
 // import { resolve } from 'path'
@@ -58,7 +59,7 @@ export default defineConfig(() => {
                 // 选项写法
                 '/api': {
                     // target: 'http://192.168.132.242:9000',
-                    target: 'http://localhost:9000',
+                    target: constant.targetAddress,
                     // 是否要代理 websockets
                     //   ws: true,
                     // 是否是 https 接口
