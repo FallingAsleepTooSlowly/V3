@@ -75,7 +75,6 @@ axiosInstance.interceptors.response.use(
 	(response) => {
 		// 对响应数据做点什么
 		const res = response.data;
-        console.log('resresres===>', res)
 		if (res.code && res.code !== 0) {
 			// `token` 过期或者账号已在别处登录
 			if (res.code === 401 || res.code === 4001) {
@@ -94,7 +93,6 @@ axiosInstance.interceptors.response.use(
 		}
 	},
     (error) => {
-        console.log('errorerror===>', error)
 		// 对响应错误做点什么
 		if (error.message.indexOf('timeout') != -1) {
 			ElMessage.error('网络超时');

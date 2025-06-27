@@ -32,8 +32,7 @@ const { themeConfig } = storeToRefs(useThemeConfig())
 
 // --------------- 生命周期
 onMounted(() => {
-    console.log('route====>', route.name)
-    console.log('router====>', router)
+
 })
 
 // ---------------- 函数

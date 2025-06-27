@@ -106,7 +106,6 @@ function login () {
         // captcha: verificationCode.value + Date.now()
         captcha: verificationCode.value
     }).then(res => {
-        console.log('userPost=====>', res)
         if (res.data) {
             // 前端自己生成 token 并保存到本地
             // Session.set('token', Math.random().toString(36).substring(0))
@@ -150,7 +149,6 @@ async function afterLogin () {
 function getSvg () {
     userApi.getSvg().then(res => {
         // sessionStorage.setItem('authorities', JSON.stringify(permissions || '[]'))
-        console.log('getSvggetSvg====>', res)
         svgHtml.value = res.data
     })
 }
@@ -158,12 +156,10 @@ function getSvg () {
 // 校验 login 存储调用
 async function checkLogin () {
     let res = await storesUserInfo.getApiUserInfo()
-    console.log('checkLogincheckLogin=====>', res)
 }
 
 // 修改主题颜色
 function changeTheme() {
-    console.log("env===>", import.meta.env)
     // 这样使用 getPropertyValue 的话，在 setProperty 之前获取不到值
     // if (document.documentElement.style.getPropertyValue('--theme-color') === "#409eff") {}
     if (getComputedStyle(document.documentElement).getPropertyValue('--theme-color') === "#409eff") {

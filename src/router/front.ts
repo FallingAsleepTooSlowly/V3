@@ -14,7 +14,6 @@ import { useTagsViewRoutes } from '@/stores/tagsViewRoutes'
  * 前端控制路由：初始化方法，防止刷新时路由丢失（用户登陆和路由跳转但无显示的路由列表时调用）
 */
 export async function initFrontControlRoutes() {
-    console.log('initFrontControlRoutes')
     // 无 token 时停止执行下一步
     if (!Session.get('token')) return false
     // 将用户信息保存到全局

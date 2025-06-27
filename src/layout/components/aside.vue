@@ -52,9 +52,7 @@ const state = reactive<AsideState>({
 
 // -------------- 生命周期
 onMounted(() => {
-    console.log('routesList.value====>', routesList.value)
     state.menuList = filterRoutesFun(routesList.value)
-    console.log('state.menuList=====>', state.menuList)
     state.menuList.forEach(item => {
         if (item?.meta?.icon) {
             item.meta.icon = getIcon(item.meta.icon)
@@ -79,7 +77,7 @@ function filterRoutesFun(routerArr: Array<String>) {
 }
 // 点击菜单跳转
 function clickMenuLink(val: any) {
-    console.log('val====>', val)
+
 }
 </script>
 

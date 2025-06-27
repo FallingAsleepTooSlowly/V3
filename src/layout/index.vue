@@ -18,7 +18,7 @@ const { themeConfig } = storeToRefs(storesThemeConfig)
 
 //---------- 生命周期
 onMounted(() => {
-    console.log('themeConfig.layout====>', themeConfig.value.layout)
+
 })
 // 页面加载前
 onBeforeMount(() => {

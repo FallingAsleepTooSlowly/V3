@@ -6,6 +6,7 @@
             headers  请求头
             data  上传时附带的额外参数
             on-success  上传成功的钩子
+            multiple  是否支持多选文件
         -->
         <el-upload
             class="portrait-upload"
@@ -36,6 +37,7 @@
                 v-model:file-list="fileList"
                 ref="uploadFileRef"
                 :auto-upload="false"
+                :multiple="true"
             >
                 <template #trigger>
                     <el-button type="primary">select file</el-button>
@@ -53,10 +55,13 @@
             </el-upload>
         </div>
 
-        <div style="margin-top: 15px;">
+         <!-- ---------------- else -->
+
+        <!-- 原生文件上传 -->
+        <!-- <div style="margin-top: 15px;">
             <input type="file" id="file" name="file" accept="*" >
             <input type="button" value="上传" @click="uploadTest(0)">
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -84,7 +89,6 @@ onMounted(() => {
 // ---------------- 函数
 // 上传文件回调
 function uploadPortrait (res) {
-    console.log('uploadPortraituploadPortrait===>', res)
     if (res && res.code === 0) {
         ElMessage.success('头像上传成功！')
         getUserInfoByUserName()
@@ -129,7 +133,9 @@ function clickUpload (index) {
     // 判断文件大小是否需要分段上传
     if (file.size < MAX_SIZE) {
         // uploadSingleFile(fileList.value[index])
-        uploadSingleFile(fileList.value[index])
+        uploadSingleFile(index)
+    } else {
+        uploadSectionFile(index, 0)
     }
     // 获取文件名和扩展名
     // let [fileName, fileExt] = file.name.split(".")
@@ -137,14 +143,20 @@ function clickUpload (index) {
 // 大文件上传分段文件
 /*
     arguments:
+    file: 当前上传的文件
     index: 文件的下标
     sectionIndex: 文件分段的下标
 */
-function uploadSectionFile (index, sectionIndex: 0) {
+function uploadSectionFile (index, sectionIndex) {
 
 }
 // 小文件直接上传
-function uploadSingleFile (file) {
+/*
+    arguments:
+    index: 当前上传的文件的下标
+*/
+function uploadSingleFile (index) {
+    const nowFile = fileList.value[index] as any
     // 获取参数
     const formData = new FormData()
     /*
@@ -153,11 +165,13 @@ function uploadSingleFile (file) {
     */
     //
     formData.append('id', userInfo.value.id as any)
-    formData.append('file', file.raw)
+    formData.append('file', nowFile.raw)
 
     // 调用接口
     uploadApi.uploadSingleFile(formData).then(res => {
-        console.log('uploadSingleFile====>', res)
+        if (index < fileList.value.length - 1) {
+            clickUpload(index + 1)
+        }
     })
 }
 
@@ -170,8 +184,8 @@ function uploadTest (index) {
     var fileInput = document.getElementById("file")!["files"]
     // 获取参数
     const formData = new FormData()
-    formData.append('file', fileInput[0])
     formData.append('id', userInfo.value.id as any)
+    formData.append('file', fileInput[0])
 
     // 调用接口
     uploadApi.uploadSingleFile(formData).then(res => {
