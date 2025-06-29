@@ -19,6 +19,17 @@ const uploadApi = {
             method: 'post',
             data
         })
+    },
+    // 分段上传文件接口
+    uploadChunkFile: (data: object) => {
+        return request({
+            url: '/upload/uploadChunkFile',
+            method: 'post',
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            data
+        })
     }
 }
 

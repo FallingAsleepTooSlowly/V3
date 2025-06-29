@@ -131,8 +131,8 @@ function clickUpload (index) {
     // 获取文件对象
     let file = fileList.value[index] as fileObject
     // 判断文件大小是否需要分段上传
-    if (file.size < MAX_SIZE) {
-        // uploadSingleFile(fileList.value[index])
+    // if (file.size < MAX_SIZE) {
+    if (false) {
         uploadSingleFile(index)
     } else {
         uploadSectionFile(index, 0)
@@ -147,8 +147,40 @@ function clickUpload (index) {
     index: 文件的下标
     sectionIndex: 文件分段的下标
 */
-function uploadSectionFile (index, sectionIndex) {
+function uploadSectionFile(index, sectionIndex) {
+    const nowFile = fileList.value[index] as any
+    console.log('nowFile==>', nowFile)
+    // 获取文件名和扩展名
+    let [fname, ext] = nowFile.name.split('.')
+    // Blob 对象表示一个不可变、原始数据的类文件对象，可以按文本或二进制的格式进行读取，也可以转换成 ReadableStream 来用于数据操作。
+    // 确定文件名，后端会用到此文件名，要按规定设置
+    let blobName = `${fname}.${sectionIndex}.${ext}`
+    /*
+        new File(fileBits, fileName, options); 用于创建一个新的文件实例
+            fileBits: 一个可迭代对象，例如一个具有 ArrayBuffer、TypedArray、DataView、Blob、字符串或任何此类元素的组合的数组，将被放入 File 内。
+                    请注意，这里的字符串被编码为 UTF-8，与通常的 JavaScript UTF-16 字符串不同，
+                    文件用 [] 括起来？
+            fileName: 表示文件名或文件路径的字符串
+            options(非必填): 包含文件可选属性的选项对象
+                    type: 表示将放入文件的内容的 MIME 类型的字符串。默认值为 ""
+                    endings: 如果数据是文本，如何解释内容中的换行符（\n）。默认值 transparent 将换行符复制到 blob 中而不更改它们。要将换行符转换为主机系统的本机约定，指定值为 native
+            lastModified: 一个数字，表示 Unix 时间纪元与文件上次修改时间之间的毫秒数。默认值为调用 Date.now() 返回的值
+    */
+    // 分段完成，作为入参的文件
+    let blobFile = new File([nowFile.raw], blobName)
 
+    // 获取参数
+    const formData = new FormData()
+    /*
+        node 的 multer 在识别到入参是文件类型时就会触发存储的方法，后面 append 的入参就识别不到，
+        所以如果存储方法会用到其它变量的话，尽量把文件放在最后 append
+    */
+    formData.append('id', userInfo.value.id as any)
+    formData.append('file', blobFile)
+
+    uploadApi.uploadChunkFile(formData).then(res => {
+        console.log('uploadChunkFile===>', res)
+    })
 }
 // 小文件直接上传
 /*
@@ -163,7 +195,6 @@ function uploadSingleFile (index) {
         node 的 multer 在识别到入参是文件类型时就会触发存储的方法，后面 append 的入参就识别不到，
         所以如果存储方法会用到其它变量的话，尽量把文件放在最后 append
     */
-    //
     formData.append('id', userInfo.value.id as any)
     formData.append('file', nowFile.raw)
 
