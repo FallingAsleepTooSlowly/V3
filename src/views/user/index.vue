@@ -131,8 +131,7 @@ function clickUpload (index) {
     // 获取文件对象
     let file = fileList.value[index] as fileObject
     // 判断文件大小是否需要分段上传
-    // if (file.size < MAX_SIZE) {
-    if (false) {
+    if (file.size < MAX_SIZE) {
         uploadSingleFile(index)
     } else {
         uploadSectionFile(index, 0)
@@ -148,10 +147,23 @@ function clickUpload (index) {
     sectionIndex: 文件分段的下标
 */
 function uploadSectionFile(index, sectionIndex) {
+    /* 每次循环固定的内容 */
+    // 切割后每一块文件的大小
+    const chunkSize = 4 * 1024 * 1024
+    // 获取到原大文件
     const nowFile = fileList.value[index] as any
     console.log('nowFile==>', nowFile)
     // 获取文件名和扩展名
     let [fname, ext] = nowFile.name.split('.')
+
+    // 开始分块，start 为每次分块的起始位置
+    let start = sectionIndex * chunkSize
+    // 如果起始位置大于文件大小，代表文件已分块上传完
+    if (start > nowFile.size) {
+        mergeSectionFile()
+    }
+
+
     // Blob 对象表示一个不可变、原始数据的类文件对象，可以按文本或二进制的格式进行读取，也可以转换成 ReadableStream 来用于数据操作。
     // 确定文件名，后端会用到此文件名，要按规定设置
     let blobName = `${fname}.${sectionIndex}.${ext}`
@@ -181,6 +193,10 @@ function uploadSectionFile(index, sectionIndex) {
     uploadApi.uploadChunkFile(formData).then(res => {
         console.log('uploadChunkFile===>', res)
     })
+}
+// 合并分块上传的文件
+function mergeSectionFile () {
+
 }
 // 小文件直接上传
 /*
