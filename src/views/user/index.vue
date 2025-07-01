@@ -179,7 +179,6 @@ function uploadChunkFile(index, sectionIndex) {
     const chunkSize = 4 * 1024 * 1024
     // 获取到原大文件
     const nowFile = fileList.value[index] as any
-    console.log('nowFile==>', nowFile)
     // 获取文件名和扩展名
     let [fname, ext] = nowFile.name.split('.')
 
@@ -218,13 +217,26 @@ function uploadChunkFile(index, sectionIndex) {
     formData.append('id', userInfo.value.id as any)
     formData.append('file', blobFile)
 
+    // 分块上传文件接口
     uploadApi.uploadChunkFile(formData).then(res => {
-        console.log('uploadChunkFile===>', res)
+        uploadChunkFile(index, ++sectionIndex)
     })
 }
 // 合并分块上传的文件
-function mergeChunkFile (fileName) {
+function mergeChunkFile(fileName) {
+    // 获取参数
+    const formData = new FormData()
+    /*
+        node 的 multer 在识别到入参是文件类型时就会触发存储的方法，后面 append 的入参就识别不到，
+        所以如果存储方法会用到其它变量的话，尽量把文件放在最后 append
+    */
+    formData.append('id', userInfo.value.id as any)
+    formData.append('name', fileName)
 
+    // 合并文件接口
+    uploadApi.mergeChunkFile(formData).then(res => {
+        ElMessage.success('文件上传成功')
+    })
 }
 
 // ---------------- else

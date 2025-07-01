@@ -30,6 +30,17 @@ const uploadApi = {
             },
             data
         })
+    },
+    // 合并上传文件接口
+    mergeChunkFile: (data: object) => {
+        return request({
+            url: '/upload/mergeChunkFile',
+            method: 'post',
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            data
+        })
     }
 }
 
