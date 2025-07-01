@@ -73,7 +73,6 @@ axiosInstance.interceptors.request.use(
 // 添加响应拦截器
 axiosInstance.interceptors.response.use(
 	(response) => {
-        console.log('responseresponse====>', response)
 		// 对响应数据做点什么
 		const res = response.data;
 		if (res.code && res.code !== 0) {
@@ -94,7 +93,6 @@ axiosInstance.interceptors.response.use(
 		}
 	},
     (error) => {
-        console.log('error====>', error)
 		// 对响应错误做点什么
 		if (error.message.indexOf('timeout') != -1) {
 			ElMessage.error('网络超时');

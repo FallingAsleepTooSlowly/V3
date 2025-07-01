@@ -57,6 +57,8 @@
 
          <!-- ---------------- else -->
 
+        <!-- <el-button @click="mergeChunkFile">手动合并</el-button> -->
+
         <!-- 原生文件上传 -->
         <!-- <div style="margin-top: 15px;">
             <input type="file" id="file" name="file" accept="*" >
@@ -87,6 +89,7 @@ onMounted(() => {
 })
 
 // ---------------- 函数
+
 // 上传文件回调
 function uploadPortrait (res) {
     if (res && res.code === 0) {
@@ -100,6 +103,7 @@ function uploadPortrait (res) {
         }
     }
 }
+
 // 获取最新用户信息
 function getUserInfoByUserName () {
     userApi.getUserInfoByUserName({
@@ -134,10 +138,33 @@ function clickUpload (index) {
     if (file.size < MAX_SIZE) {
         uploadSingleFile(index)
     } else {
-        uploadSectionFile(index, 0)
+        uploadChunkFile(index, 0)
     }
     // 获取文件名和扩展名
     // let [fileName, fileExt] = file.name.split(".")
+}
+// 小文件直接上传
+/*
+    arguments:
+    index: 当前上传的文件的下标
+*/
+function uploadSingleFile (index) {
+    const nowFile = fileList.value[index] as any
+    // 获取参数
+    const formData = new FormData()
+    /*
+        node 的 multer 在识别到入参是文件类型时就会触发存储的方法，后面 append 的入参就识别不到，
+        所以如果存储方法会用到其它变量的话，尽量把文件放在最后 append
+    */
+    formData.append('id', userInfo.value.id as any)
+    formData.append('file', nowFile.raw)
+
+    // 调用接口
+    uploadApi.uploadSingleFile(formData).then(res => {
+        if (index < fileList.value.length - 1) {
+            clickUpload(index + 1)
+        }
+    })
 }
 // 大文件上传分段文件
 /*
@@ -146,7 +173,7 @@ function clickUpload (index) {
     index: 文件的下标
     sectionIndex: 文件分段的下标
 */
-function uploadSectionFile(index, sectionIndex) {
+function uploadChunkFile(index, sectionIndex) {
     /* 每次循环固定的内容 */
     // 切割后每一块文件的大小
     const chunkSize = 4 * 1024 * 1024
@@ -160,7 +187,8 @@ function uploadSectionFile(index, sectionIndex) {
     let start = sectionIndex * chunkSize
     // 如果起始位置大于文件大小，代表文件已分块上传完
     if (start > nowFile.size) {
-        mergeSectionFile()
+        mergeChunkFile(nowFile.name)
+        return
     }
 
 
@@ -195,31 +223,8 @@ function uploadSectionFile(index, sectionIndex) {
     })
 }
 // 合并分块上传的文件
-function mergeSectionFile () {
+function mergeChunkFile (fileName) {
 
-}
-// 小文件直接上传
-/*
-    arguments:
-    index: 当前上传的文件的下标
-*/
-function uploadSingleFile (index) {
-    const nowFile = fileList.value[index] as any
-    // 获取参数
-    const formData = new FormData()
-    /*
-        node 的 multer 在识别到入参是文件类型时就会触发存储的方法，后面 append 的入参就识别不到，
-        所以如果存储方法会用到其它变量的话，尽量把文件放在最后 append
-    */
-    formData.append('id', userInfo.value.id as any)
-    formData.append('file', nowFile.raw)
-
-    // 调用接口
-    uploadApi.uploadSingleFile(formData).then(res => {
-        if (index < fileList.value.length - 1) {
-            clickUpload(index + 1)
-        }
-    })
 }
 
 // ---------------- else
