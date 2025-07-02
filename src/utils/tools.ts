@@ -79,3 +79,20 @@ export function deepClone(obj: any): any {
 	}
 	return newObj
 }
+
+// 接口返回文件流时，将其转换为 Blob 对象，然后使用 URL.createObjectURL() 方法创建一个 URL 地址，最后触发下载
+export function downloadBlobFile (fileName, fileUrl) {
+    // axios.get(fileUrl, { responseType: 'blob' }).then(response => {
+    //     const blob = new Blob([response.data]);
+    //     const url = window.URL.createObjectURL(blob);
+    //     let link = document.createElement('a');
+    //     link.style.display = 'none';
+    //     link.href = url;
+    //     link.setAttribute('download', fileName);
+    //     document.body.appendChild(link);
+    //     link.click();
+    //     document.body.removeChild(link);
+    // })
+}
+
+// 根据文件静态地址下载文件

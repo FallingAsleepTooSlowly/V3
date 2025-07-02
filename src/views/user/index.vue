@@ -85,7 +85,7 @@ const fileList = ref([])
 
 // --------------- 生命周期
 onMounted(() => {
-    getUserInfoByUserName()
+    // getUserInfoByUserName()
 })
 
 // ---------------- 函数
