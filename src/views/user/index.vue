@@ -17,7 +17,7 @@
             :data="{ name: userInfo.name }"
             :on-success="uploadPortrait"
         >
-            <img v-if="userInfo.portrait" class="u-portrait" :src="constant.portraitAddress + userInfo.portrait">
+            <img v-if="userInfo.portrait" class="u-portrait" :src="constant.portraitAddress + userInfo.portrait + '?token=' + Session.get('token')">
             <IEpPlus v-else class="u-portrait"></IEpPlus>
         </el-upload>
         <el-upload

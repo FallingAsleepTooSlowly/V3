@@ -1,6 +1,7 @@
 /* 常量文件 */
 
 // const targetAddress = 'http://192.168.132.242:9000'
+// const targetAddress = 'http://26.84.167.69:9000'
 const targetAddress = 'http://localhost:9000'
 
 const constant = {
