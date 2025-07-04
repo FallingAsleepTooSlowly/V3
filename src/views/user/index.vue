@@ -176,7 +176,7 @@ function uploadSingleFile (index) {
 function uploadChunkFile(index, sectionIndex) {
     /* 每次循环固定的内容 */
     // 切割后每一块文件的大小
-    const chunkSize = 4 * 1024 * 1024
+    const chunkSize = 5 * 1024 * 1024
     // 获取到原大文件
     const nowFile = fileList.value[index] as any
     // 获取文件名和扩展名
@@ -192,6 +192,8 @@ function uploadChunkFile(index, sectionIndex) {
 
 
     // Blob 对象表示一个不可变、原始数据的类文件对象，可以按文本或二进制的格式进行读取，也可以转换成 ReadableStream 来用于数据操作。
+    // 获取到本次需要上传的文件块
+    let blob = nowFile.raw.slice(start, start + chunkSize)
     // 确定文件名，后端会用到此文件名，要按规定设置
     let blobName = `${fname}.${sectionIndex}.${ext}`
     /*
@@ -206,7 +208,7 @@ function uploadChunkFile(index, sectionIndex) {
             lastModified: 一个数字，表示 Unix 时间纪元与文件上次修改时间之间的毫秒数。默认值为调用 Date.now() 返回的值
     */
     // 分段完成，作为入参的文件
-    let blobFile = new File([nowFile.raw], blobName)
+    let blobFile = new File([blob], blobName)
 
     // 获取参数
     const formData = new FormData()
@@ -231,7 +233,7 @@ function mergeChunkFile(fileName) {
         所以如果存储方法会用到其它变量的话，尽量把文件放在最后 append
     */
     formData.append('id', userInfo.value.id as any)
-    formData.append('name', fileName)
+    formData.append('fileName', fileName)
 
     // 合并文件接口
     uploadApi.mergeChunkFile(formData).then(res => {
