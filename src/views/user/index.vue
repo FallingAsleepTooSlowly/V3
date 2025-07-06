@@ -32,6 +32,7 @@
         </el-upload>
         <!-- <img src="http://192.168.132.242:9000/static/portrait/1111.jpeg"> -->
 
+        <!-- 大小文件上传 -->
         <div style="margin-top: 15px;">
             <el-upload
                 v-model:file-list="fileList"
@@ -55,7 +56,12 @@
             </el-upload>
         </div>
 
-         <!-- ---------------- else -->
+        <!-- 用户文件获取 -->
+        <div>
+            <el-button type="success">获取用户文件</el-button>
+        </div>
+
+        <!-- ---------------- else -->
 
         <!-- <el-button @click="mergeChunkFile">手动合并</el-button> -->
 
@@ -71,7 +77,7 @@
 import { useUserInfo } from '@/stores/userInfo';
 import { storeToRefs } from 'pinia';
 import userApi from '@/api/user';
-import uploadApi from '@/api/upload';
+import filesApi from '@/api/files';
 import { Session } from "@/utils/storage";
 import constant from "@/common/constant"
 // --------------- 变量
@@ -85,7 +91,7 @@ const fileList = ref([])
 
 // --------------- 生命周期
 onMounted(() => {
-    // getUserInfoByUserName()
+    getUserInfoByUserName()
 })
 
 // ---------------- 函数
@@ -160,9 +166,12 @@ function uploadSingleFile (index) {
     formData.append('file', nowFile.raw)
 
     // 调用接口
-    uploadApi.uploadSingleFile(formData).then(res => {
+    filesApi.uploadSingleFile(formData).then(res => {
         if (index < fileList.value.length - 1) {
             clickUpload(index + 1)
+        } else {
+            let fileNum = index + 1
+            ElMessage.success(fileNum + '个文件上传成功')
         }
     })
 }
@@ -186,7 +195,7 @@ function uploadChunkFile(index, sectionIndex) {
     let start = sectionIndex * chunkSize
     // 如果起始位置大于文件大小，代表文件已分块上传完
     if (start > nowFile.size) {
-        mergeChunkFile(nowFile.name)
+        mergeChunkFile(index, nowFile.name)
         return
     }
 
@@ -220,12 +229,12 @@ function uploadChunkFile(index, sectionIndex) {
     formData.append('file', blobFile)
 
     // 分块上传文件接口
-    uploadApi.uploadChunkFile(formData).then(res => {
+    filesApi.uploadChunkFile(formData).then(res => {
         uploadChunkFile(index, ++sectionIndex)
     })
 }
 // 合并分块上传的文件
-function mergeChunkFile(fileName) {
+function mergeChunkFile(index, fileName) {
     // 获取参数
     const formData = new FormData()
     /*
@@ -236,8 +245,13 @@ function mergeChunkFile(fileName) {
     formData.append('fileName', fileName)
 
     // 合并文件接口
-    uploadApi.mergeChunkFile(formData).then(res => {
-        ElMessage.success('文件上传成功')
+    filesApi.mergeChunkFile(formData).then(res => {
+        if (index < fileList.value.length - 1) {
+            clickUpload(index + 1)
+        } else {
+            let fileNum = index + 1
+            ElMessage.success(fileNum + '个文件上传成功')
+        }
     })
 }
 
@@ -254,7 +268,7 @@ function uploadTest (index) {
     formData.append('file', fileInput[0])
 
     // 调用接口
-    uploadApi.uploadSingleFile(formData).then(res => {
+    filesApi.uploadSingleFile(formData).then(res => {
         console.log('uploadSingleFile====>', res)
     })
 }
