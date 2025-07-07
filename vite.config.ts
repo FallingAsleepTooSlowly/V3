@@ -35,7 +35,6 @@ import Icons from 'unplugin-icons/vite'
 // 解析器引入
 import IconsResolver from 'unplugin-icons/resolver'
 
-
 // https://vite.dev/config/
 // 修改为箭头函数方便后续添加变量
 export default defineConfig(() => {
@@ -141,7 +140,12 @@ export default defineConfig(() => {
                     */
                     IconsResolver({
                         // prefix: 'Icon',
-                        enabledCollections: ['ep']
+                        // enabledCollections: ['ep', 'flat-color-icons'],
+                        // 当图标集名字过长时，可使用集合别名，即用下面的来取代 enabledCollections，可用原名也可用别名
+                        alias: {
+                            ep: 'ep',
+                            fci: 'flat-color-icons'
+                        },
                     })
                 ],
                 // 指定组件位置，默认是src/components，不修改的话 src/components 的组件都不需要手动导入了

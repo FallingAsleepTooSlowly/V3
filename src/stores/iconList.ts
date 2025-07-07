@@ -4,6 +4,7 @@ import IEpUser from "~icons/ep/user";
 import IEpHouse from "~icons/ep/house";
 import IEpDocument from "~icons/ep/document";
 import IEpKey from "~icons/ep/key";
+import UEpFiles from "~icons/ep/Files";
 
 export const useIconList = defineStore('iconList', {
     state: () => ({
@@ -12,7 +13,8 @@ export const useIconList = defineStore('iconList', {
             'IEpHouse': IEpHouse,
             'IEpUser': IEpUser,
             'IEpDocument': IEpDocument,
-            'IEpKey': IEpKey
+            'IEpKey': IEpKey,
+            'UEpFiles': UEpFiles
         }
     }),
     actions: {

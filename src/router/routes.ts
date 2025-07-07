@@ -38,6 +38,16 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                 }
             },
             {
+                path: '/files',
+                name: 'files',
+                component: () => import("@/views/files/index.vue"),
+                meta: {
+                    title: '文件',
+                    roles: ['admin', 'common'],
+                    icon: 'UEpFiles'
+                }
+            },
+            {
                 path: '/account',
                 name: 'account',
                 component: () => import("@/views/account/index.vue"),
