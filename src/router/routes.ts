@@ -24,7 +24,11 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                 meta: {
                     title: '首页',
                     roles: ['admin', 'common'],
+                    // 使用自动引入的图标
                     icon: 'IEpHouse'
+                    // 使用自己本地的图标，下同
+                    // icon: 'home_gray.png',
+                    // acIcon: 'home_white.png',
                 }
             },
             {

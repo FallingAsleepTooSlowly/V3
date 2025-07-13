@@ -7,6 +7,7 @@
     padding: 0;
     box-sizing: border-box;
     outline: none !important;
+    list-style: none;
 }
 
 html,
@@ -21,8 +22,24 @@ body,
 }
 
 html {
-	--theme-color: #409eff;
+	// 主题颜色
+	--theme-color: #3A9AFF;
+    // 主字体色
+    --main-color: #333333;
+    // 浅字体色
+    --light-color: #999999;
+    // 分割线颜色
+    --line-color: #E3E3E3;
+    // 图标颜色
     --icon-color: #333;
+    // 主要字体大小
+    --main-size: 12px;
+    // 侧边栏字体大小
+    --aside-size: 14px;
+    // 标题字体大小
+    --title-size: 16px;
+    // 大标题字体大小
+    --big-title-size: 18px;
 }
 
 // :root 优先级比 html 高，但在里面定义变量的话可能因为解析顺序导致变量不生效
@@ -68,4 +85,28 @@ html {
 }
 .min100vh {
     min-height: 100vh !important;
+}
+
+/* else
+----------------------------------- */
+// 进度条样式，避免被设置了阴影的侧边栏样式覆盖
+#nprogress {
+    position: relative;
+    z-index: 999;
+    .bar {
+        background: var(--theme-color);
+    }
+}
+
+// element 样式
+.app-el-drawer-header {
+    border-bottom: 1px solid var(--line-color) !important;
+    padding: 20px !important;
+    margin-bottom: 0 !important;
+    font-size: var(--title-size) !important;
+}
+.app-el-drawer-footer {
+    padding: 20px !important;
+    text-align: center !important;
+    border-top: 1px solid var(--line-color) !important;
 }

@@ -2,7 +2,7 @@
 
 window.AppConfig = {
     // 系统名称
-    name: '后台管理系统'
+    name: '地球防卫军'
 };
 //系统名称
 document.title = window.AppConfig.name || '';
